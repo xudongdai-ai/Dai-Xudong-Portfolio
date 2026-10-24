@@ -1,0 +1,100 @@
+{
+  "scope": "selective public portfolio release",
+  "files": [
+    {
+      "path": "site-manifest.json",
+      "bytes": 2414,
+      "sha256": "2594979bd81d72b8ada162077ca363be70d11e77f7c9cf99b379a3f90633a73d"
+    },
+    {
+      "path": "projects.json",
+      "bytes": 2456,
+      "sha256": "69378342573e0530f5c8f6dc4423fae00409f7e6c073c9839a529215abdddb25"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2952,
+      "sha256": "dfa70505ee236492cc4dc5ee5716f4e35d61a24be5d4a47ed7dcdc300a3218b3"
+    },
+    {
+      "path": "site-overlay/index.html",
+      "bytes": 20208,
+      "sha256": "809f408015254fe96295a194257f0dba7e984b9b212ee14a9a69e66c1002e1d6"
+    },
+    {
+      "path": "site-overlay/about.html",
+      "bytes": 20768,
+      "sha256": "923d7ecdc83ee1bb58b859e6f88a565d49663c3abed5edf725d52b575c00dfbf"
+    },
+    {
+      "path": "site-overlay/research.html",
+      "bytes": 15432,
+      "sha256": "187c98969519bd6aa858bc54f30d6590a2bc01605213d9add2166803f7ca9807"
+    },
+    {
+      "path": "site-overlay/documents.html",
+      "bytes": 7940,
+      "sha256": "f69f634729cd426e1d58dc676c2c2d4ef94e1e5bdd8e17751e94035b0df99e4e"
+    },
+    {
+      "path": "site-overlay/projects.html",
+      "bytes": 17363,
+      "sha256": "e1f90cf4120fcb5c7f217d189df8f9a557bbd56bfd204e688f020461e0590761"
+    },
+    {
+      "path": "site-overlay/synth.html",
+      "bytes": 12411,
+      "sha256": "9de9984724c5f9245cc8176c231cf84a5433aec1f379d68b2106d4a04a997ca0"
+    },
+    {
+      "path": "site-overlay/portfolio-evidence.css",
+      "bytes": 1508,
+      "sha256": "96d6c5aa9e4ade35f3cc9af333a716be32a3038e24251b00f33b403b7eda36e5"
+    },
+    {
+      "path": "site-overlay/xunpu.html",
+      "bytes": 28202,
+      "sha256": "58dacbd4c7c6eba8d3fcc8380c20eebf923ad21842006cdc5434c1f216f27a49"
+    },
+    {
+      "path": "site-overlay/music.html",
+      "bytes": 14301,
+      "sha256": "4bbddf451bebee6c7dc15402b62106930e9ffc0e2e6880d98f196f7678a59037"
+    },
+    {
+      "path": "site-overlay/evidence.html",
+      "bytes": 13614,
+      "sha256": "155fff670c4cfc975138e3d2e165ce6f84cff3469f60e5830e85884b9223325a"
+    },
+    {
+      "path": "site-overlay/assets/evidence-20261024/synth-04-interface.png",
+      "bytes": 470222,
+      "sha256": "729eaa2d83f82a29965e08d8fa79074b03914ab6d294de2911a25d0333ea293b"
+    },
+    {
+      "path": "site-overlay/assets/evidence-20261024/synth-family-4.wav",
+      "bytes": 2304104,
+      "sha256": "6daebb42d03eaaf8f44ddcf5ee251346b2446719104786bb122182177d6b7310"
+    },
+    {
+      "path": "site-overlay/assets/evidence-20261024/synth-family-5.wav",
+      "bytes": 2304104,
+      "sha256": "f4c2697899c5f1b8fa0319398bf3857cf2d03649336fe81ac21a00b8d8e10e59"
+    },
+    {
+      "path": "site-overlay/assets/evidence-20261024/synth-family-1.wav",
+      "bytes": 2304104,
+      "sha256": "e110a4c3e2d6b2d0dc8d942b5300e46d740e8daa7ea979b0a7c3e9cd77c95569"
+    },
+    {
+      "path": "site-overlay/assets/evidence-20261024/synth-family-2.wav",
+      "bytes": 2304104,
+      "sha256": "e85df5d8770ed66a16fb1c4f6747c60d514ebeca005c0bb340c59560e2652d80"
+    },
+    {
+      "path": "site-overlay/assets/evidence-20261024/synth-family-3.wav",
+      "bytes": 2304104,
+      "sha256": "0e5563e30a873b113688a2ac25c14a48556bf4cab70d4ed4f39f6079ddc2211b"
+    }
+  ]
+}

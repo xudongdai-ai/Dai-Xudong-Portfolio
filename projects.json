@@ -1,0 +1,56 @@
+[
+  {
+    "project": "Xunpu Studio",
+    "github": "https://github.com/xudongdai-ai/Xunpu-Studio-Portfolio",
+    "website": "https://daixudong.art/xunpu/",
+    "scope": "Harmony analysis, form analysis and assignment feedback; public review interfaces only."
+  },
+  {
+    "project": "Xunpu AI Synth 0.4",
+    "github": "https://github.com/xudongdai-ai/Xunpu-AI-Synth-Portfolio",
+    "website": "https://daixudong.art/synth.html",
+    "scope": "Text-to-timbre architecture and selected native engineering evidence."
+  },
+  {
+    "project": "MGSA",
+    "github": "https://github.com/xudongdai-ai/MGSA-Research-Preview",
+    "website": "https://daixudong.art/research.html#mgsa",
+    "scope": "Single-fold symbolic boundary pilot; selected per-run metrics, no model source."
+  },
+  {
+    "project": "Xunpu GraphOMR",
+    "github": "https://github.com/xudongdai-ai/Xunpu.GraphOMR",
+    "website": "https://daixudong.art/research.html#graphomr",
+    "scope": "Existing public classical baseline and 16 synthetic regression cases."
+  },
+  {
+    "project": "Music Segment Boundary Toolkit",
+    "github": "https://github.com/xudongdai-ai/Music-Segment-Boundary-Toolkit",
+    "website": "https://daixudong.art/evidence.html#audio",
+    "scope": "Boundary-review workflow and aggregate processing records."
+  },
+  {
+    "project": "Semantic Relevance Assistant",
+    "github": "https://github.com/xudongdai-ai/Semantic-Relevance-Labeling-Assistant-Human-in-the-loop-LLM-Annotation-Quality-Control",
+    "website": "https://daixudong.art/evidence.html#semantic",
+    "scope": "Human annotation coverage and calibration agreement."
+  },
+  {
+    "project": "ReelMesh Studio",
+    "github": "https://github.com/xudongdai-ai/ReelMesh-Studio-Local-First-AIGC-Production-Workbench",
+    "website": "https://daixudong.art/projects.html",
+    "scope": "Existing public workbench snapshot; current production systems remain private."
+  },
+  {
+    "project": "Twelve-Tone Matrix",
+    "github": "https://github.com/xudongdai-ai/twelve-tone-suite",
+    "website": "https://daixudong.art/twelve-tone-demo.html",
+    "scope": "Existing public composition tool and transparent matrix workflow."
+  },
+  {
+    "project": "ShortDramaAgent",
+    "github": "https://github.com/xudongdai-ai/ShortDramaAgent-Event-Driven-AI-Editing-Skill",
+    "website": "https://daixudong.art/projects.html",
+    "scope": "Companion event-driven planning workflow; editor execution is separate."
+  }
+]
