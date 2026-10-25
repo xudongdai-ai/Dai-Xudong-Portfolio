@@ -1,0 +1,2825 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>中国传统民歌数据库</title>
+    <link rel="stylesheet" href="/static/styles.css?v={{ static_version }}">
+  </head>
+  <body class="public-home">
+    <section id="authView" class="auth-screen">
+      <div class="auth-panel">
+        <div class="auth-brand">
+          <div class="brand-mark">乐</div>
+          <div>
+            <h1>中国传统民歌数据库</h1>
+            <p>数据整理、查看与协作标注入口</p>
+          </div>
+        </div>
+        <div class="auth-tabs">
+          <button id="loginTab" class="auth-tab active" type="button">登录</button>
+          <button id="registerTab" class="auth-tab" type="button">注册</button>
+        </div>
+        <form id="loginForm" class="auth-form active">
+          <label>邮箱<input name="email" type="email" autocomplete="email" required></label>
+          <label>密码<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="button" type="submit">登录工作台</button>
+        </form>
+        <form id="registerForm" class="auth-form">
+          <label>姓名<input name="display_name" autocomplete="name" placeholder="用于后台识别标注员"></label>
+          <label>邮箱<input name="email" type="email" autocomplete="email" required></label>
+          <div class="code-row">
+            <label>验证码<input name="code" inputmode="numeric" maxlength="6" required></label>
+            <button id="sendRegisterCode" class="button secondary" type="button">获取验证码</button>
+          </div>
+          <label>密码<input name="password" type="password" autocomplete="new-password" minlength="8" required></label>
+          <button class="button" type="submit">注册并进入</button>
+        </form>
+      </div>
+    </section>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">乐</div>
+        <div>
+          <h1>中国传统民歌数据库</h1>
+          <p>数据查看与标注管理</p>
+        </div>
+        <button id="toggleSidebar" class="sidebar-toggle" type="button" title="隐藏菜单">‹</button>
+      </div>
+      <section class="user-card">
+        <div>
+          <b id="currentUserName">未登录</b>
+          <span id="currentUserRole">访客</span>
+        </div>
+        <button id="logoutButton" class="button secondary compact" type="button">退出</button>
+      </section>
+      <nav class="library-nav">
+        <section class="nav-group nav-group-open" data-nav-group="home">
+          <button id="returnHomeButton" class="nav-item home-nav-item" type="button">返回首页</button>
+        </section>
+        <section class="nav-group nav-group-open" data-nav-group="governance">
+          <button class="nav-heading" type="button" aria-expanded="true">
+            <span>全库治理</span><b>⌄</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="unifiedSearch">统一搜索</button>
+            <button class="nav-item" data-view="qualityDashboard">质量看板</button>
+            <button class="nav-item" data-view="annotationProjects">标注项目</button>
+          </div>
+        </section>
+        <section class="nav-group" data-nav-group="audio">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>陕北民歌音频库</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="overview">概览</button>
+            <button class="nav-item" data-view="songs">歌曲列表</button>
+            <button class="nav-item" data-view="avSongs">情绪标注结果</button>
+            <button class="nav-item" data-view="avAnalysis">情绪标注分析</button>
+            <button class="nav-item" data-view="scores">曲谱候选</button>
+          </div>
+        </section>
+        <section class="nav-group" data-nav-group="book">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>陕北民歌曲谱库</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="bookOverview">概览</button>
+            <button class="nav-item" data-view="bookLyrics">歌词数据列表</button>
+            <button class="nav-item" data-view="bookScores">图书谱面 OCR</button>
+            <button class="nav-item" data-view="bookReviewQueue">页面核验队列</button>
+            <button class="nav-item" data-view="bookPages">页面版面</button>
+            <button class="nav-item" data-view="bookCandidates">歌曲候选</button>
+            <button class="nav-item" data-view="bookRisks">谱面风险</button>
+            <button class="nav-item" data-view="bookDelivery">谱面交付队列</button>
+          </div>
+        </section>
+        <section class="nav-group" data-nav-group="zlygu">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>中乐府数据</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="zlyguOverview">概览</button>
+            <button class="nav-item" data-view="zlygu">曲目列表</button>
+          </div>
+        </section>
+        <section class="nav-group" data-nav-group="qiyue">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>器乐资源库</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="qiyueOverview">概览</button>
+            <button class="nav-item" data-view="qiyueAudio">本地器乐音频</button>
+            <button class="nav-item" data-view="qiyueVideo">龙音视频解析</button>
+          </div>
+        </section>
+        <section class="nav-group" data-nav-group="rymusic">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>人音曲库</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="rymusicOverview">概览</button>
+            <button class="nav-item" data-view="rymusicResources">资源列表</button>
+          </div>
+        </section>
+        <section class="nav-group" data-nav-group="folk">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>中国民歌资源库</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="folkOverview">概览</button>
+            <button class="nav-item" data-view="folkResources">资源列表</button>
+            <button class="nav-item" data-view="folkReviewQueue">人工复核队列</button>
+            <button class="nav-item" data-view="folkModelStats">模型标签统计</button>
+            <button class="nav-item" data-view="folkVocabLab">词表提案</button>
+          </div>
+        </section>
+        <section class="nav-group admin-only" data-nav-group="system">
+          <button class="nav-heading" type="button" aria-expanded="false">
+            <span>系统管理</span><b>›</b>
+          </button>
+          <div class="nav-children">
+            <button class="nav-item" data-view="adminUsers">用户管理</button>
+            <button class="nav-item" data-view="adminDashboard">项目仪表盘</button>
+            <button class="nav-item" data-view="adminProjects">项目治理</button>
+            <button class="nav-item" data-view="adminTasks">任务查询</button>
+            <button class="nav-item" data-view="adminLogs">系统日志</button>
+            <button class="nav-item" data-view="adminExports">导出中心</button>
+          </div>
+        </section>
+      </nav>
+    </aside>
+    <button id="showSidebar" class="show-sidebar-button" type="button">菜单</button>
+
+    <main class="shell">
+      <section id="homeView" class="view active">
+        <section class="home-hero">
+          <div class="heritage-kicker">中国传统民歌数据库</div>
+          <h2>传统民歌采集、整理与数字化工作台</h2>
+          <p>汇集音频、曲谱与多来源音乐数据，支持歌词、曲谱、情绪标注和交付流程的统一管理。</p>
+          <div class="home-hero-actions">
+            <button id="homeLoginButton" class="button" type="button">登录进入工作台</button>
+          </div>
+        </section>
+        <section class="home-library-grid" id="homeLibraryCards">
+          <article class="library-card">
+            <div class="library-card-seal">音</div>
+            <div>
+              <span class="library-card-kicker">Shanbei Audio</span>
+              <h3>陕北民歌音频库</h3>
+              <p>歌曲元数据、ASR、歌词、情绪标注与曲谱候选。</p>
+            </div>
+            <div class="library-card-stats" id="homeAudioStats">加载中</div>
+            <button class="button" type="button" data-jump-view="overview">进入音频库</button>
+          </article>
+          <article class="library-card">
+            <div class="library-card-seal">谱</div>
+            <div>
+              <span class="library-card-kicker">Notation Archive</span>
+              <h3>陕北民歌曲谱库</h3>
+              <p>图书曲目、谱面 OCR、电子简谱识别与交付队列。</p>
+            </div>
+            <div class="library-card-stats" id="homeBookStats">加载中</div>
+            <button class="button" type="button" data-jump-view="bookOverview">进入曲谱库</button>
+          </article>
+          <article class="library-card">
+            <div class="library-card-seal">乐</div>
+            <div>
+              <span class="library-card-kicker">Zhong Yue Fu</span>
+              <h3>中乐府数据</h3>
+              <p>中乐府音频、作者、专辑、歌词和音频地址采集结果。</p>
+            </div>
+            <div class="library-card-stats" id="homeZlyguStats">加载中</div>
+            <button class="button" type="button" data-jump-view="zlyguOverview">进入中乐府</button>
+          </article>
+          <article class="library-card">
+            <div class="library-card-seal">民</div>
+            <div>
+              <span class="library-card-kicker">Folk Resource</span>
+              <h3>中国民歌资源库</h3>
+              <p>全国民歌资源、AI 全维度标注、ASR、模型复核和词表治理。</p>
+            </div>
+            <div class="library-card-stats" id="homeFolkStats">加载中</div>
+            <button class="button" type="button" data-jump-view="folkOverview">进入资源库</button>
+          </article>
+          <article class="library-card">
+            <div class="library-card-seal">器</div>
+            <div>
+              <span class="library-card-kicker">Instrumental Archive</span>
+              <h3>器乐资源库</h3>
+              <p>民族器乐音频、龙音视频解析、乐器分类与结构化识别结果。</p>
+            </div>
+            <div class="library-card-stats" id="homeQiyueStats">加载中</div>
+            <button class="button" type="button" data-jump-view="qiyueOverview">进入器乐库</button>
+          </article>
+          <article class="library-card">
+            <div class="library-card-seal">人</div>
+            <div>
+              <span class="library-card-kicker">RY Music</span>
+              <h3>人音曲库</h3>
+              <p>人民音乐出版社曲库资源、音频/视频地址、专辑、作曲与演奏信息。</p>
+            </div>
+            <div class="library-card-stats" id="homeRymusicStats">加载中</div>
+            <button class="button" type="button" data-jump-view="rymusicOverview">进入人音曲库</button>
+          </article>
+        </section>
+        <section class="home-notes">
+          <div>
+            <b>整理范围</b>
+            <span>以陕北民歌为核心，逐步接入传统民歌音频、图书曲谱与外部数据源。</span>
+          </div>
+          <div>
+            <b>工作流</b>
+            <span>采集、清洗、标注、识别、复核与交付在同一后台中闭环。</span>
+          </div>
+        </section>
+      </section>
+
+      <section id="unifiedSearchView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>全库统一搜索</h2>
+            <p id="unifiedSearchCount">跨库检索曲目、音频、曲谱、器乐和外部来源资源</p>
+          </div>
+          <button id="reloadUnifiedSearch" class="button">刷新</button>
+        </header>
+
+        <section class="toolbar unified-toolbar">
+          <input id="unifiedSearchInput" type="search" placeholder="搜索曲名、人物、专辑、地域、分类">
+          <select id="unifiedSourceFilter">
+            <option value="">全部来源</option>
+            <option value="shanbei_audio">陕北民歌音频库</option>
+            <option value="shanbei_book">陕北民歌曲谱库</option>
+            <option value="zlygu">中乐府数据</option>
+            <option value="folk_ctmsa">中国民歌资源库</option>
+            <option value="minge_resource">民歌网资源</option>
+            <option value="qiyue_audio">器乐本地音频</option>
+            <option value="qiyue_video">器乐龙音解析</option>
+            <option value="rymusic">人音曲库</option>
+          </select>
+          <select id="unifiedIssueFilter">
+            <option value="">全部状态</option>
+            <option value="missing_media">缺媒体地址</option>
+            <option value="missing_oss">媒体未入 OSS</option>
+            <option value="missing_lyrics">缺歌词/转写</option>
+            <option value="missing_score">曲谱缺谱面块</option>
+            <option value="missing_ai_label">缺 AI 标注</option>
+            <option value="needs_review">需复核</option>
+          </select>
+        </section>
+
+        <div id="unifiedSourceSummary" class="badge-row summary-badges"></div>
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>来源</th>
+                <th>资源</th>
+                <th>人物/专辑</th>
+                <th>地域/分类</th>
+                <th>覆盖</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="unifiedRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevUnifiedPage" class="button secondary">上一页</button>
+          <span id="unifiedPageInfo"></span>
+          <button id="nextUnifiedPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="qualityDashboardView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>数据质量看板</h2>
+            <p>按来源库追踪媒体、OSS、歌词、曲谱、AI 标注和复核缺口</p>
+          </div>
+          <button id="reloadQualityDashboard" class="button">刷新</button>
+        </header>
+        <div id="qualityStats" class="stat-grid"></div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>主要质量问题</h3>
+            <div id="qualityIssueBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>资源类型分布</h3>
+            <div id="qualityTypeBars" class="bars"></div>
+          </section>
+        </div>
+        <section class="panel">
+          <h3>各库覆盖情况</h3>
+          <div id="qualitySourceRows" class="quality-source-grid"></div>
+        </section>
+      </section>
+
+      <section id="adminUsersView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>用户管理</h2>
+            <p id="adminUsersCount">管理管理员、开发专家、测试员和普通用户权限</p>
+          </div>
+          <button id="reloadAdminUsers" class="button">刷新</button>
+        </header>
+        <section class="toolbar unified-toolbar">
+          <input id="adminUserSearchInput" type="search" placeholder="搜索邮箱或姓名">
+          <select id="adminUserRoleFilter">
+            <option value="">全部角色</option>
+            <option value="admin">管理员</option>
+            <option value="developer">开发专家</option>
+            <option value="tester">测试员</option>
+            <option value="user">普通用户</option>
+          </select>
+          <select id="adminUserStatusFilter">
+            <option value="">全部状态</option>
+            <option value="active">启用</option>
+            <option value="disabled">停用</option>
+          </select>
+        </section>
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>用户</th>
+                <th>角色</th>
+                <th>状态</th>
+                <th>权限</th>
+                <th>最近登录</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="adminUserRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevAdminUserPage" class="button secondary">上一页</button>
+          <span id="adminUserPageInfo"></span>
+          <button id="nextAdminUserPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="adminUserDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="adminUserDetailTitle">用户详情</h2>
+            <p id="adminUserDetailMeta">登录、任务、提交和操作记录</p>
+          </div>
+          <button id="backToAdminUsers" class="button secondary" type="button">返回用户列表</button>
+        </header>
+        <section id="adminUserDetailSummary" class="metric-grid"></section>
+        <section class="two-column">
+          <section class="panel">
+            <h3>登录与验证码记录</h3>
+            <div id="adminUserAuthEvents" class="compact-list"></div>
+          </section>
+          <section class="panel">
+            <h3>最近操作记录</h3>
+            <div id="adminUserActionLogs" class="compact-list"></div>
+          </section>
+        </section>
+        <section class="panel">
+          <h3>按项目任务统计</h3>
+          <div id="adminUserProjectStats" class="compact-list"></div>
+        </section>
+        <section class="panel">
+          <h3>任务分配记录</h3>
+          <div id="adminUserAssignments" class="compact-list"></div>
+        </section>
+        <section class="panel">
+          <h3>提交记录</h3>
+          <div id="adminUserSubmissions" class="compact-list"></div>
+        </section>
+      </section>
+
+      <section id="adminDashboardView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>项目仪表盘</h2>
+            <p>按标注项目查看任务量、完成进度、标注员进度、提交趋势和待处理异常。</p>
+          </div>
+          <button id="reloadAdminDashboard" class="button" type="button">刷新</button>
+        </header>
+        <section class="toolbar unified-toolbar">
+          <select id="adminDashboardProjectFilter"></select>
+        </section>
+        <section id="adminDashboardSummary" class="metric-grid"></section>
+        <section class="two-column">
+          <section class="panel">
+            <h3>项目状态与任务分布</h3>
+            <div id="adminDashboardStatusRows" class="compact-list"></div>
+          </section>
+          <section class="panel">
+            <h3>最近提交趋势</h3>
+            <div id="adminDashboardTrendRows" class="dashboard-trend"></div>
+          </section>
+        </section>
+        <section class="panel">
+          <h3>项目进度</h3>
+          <div id="adminDashboardProjectRows" class="dashboard-project-grid"></div>
+        </section>
+        <section class="two-column">
+          <section class="panel">
+            <h3>标注员项目进度</h3>
+            <div id="adminDashboardUserRows" class="compact-list"></div>
+          </section>
+          <section class="panel">
+            <h3>待关注项目</h3>
+            <div id="adminDashboardRiskRows" class="compact-list"></div>
+          </section>
+        </section>
+      </section>
+
+      <section id="adminProjectsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>项目治理</h2>
+            <p>管理标注项目状态、归档和基础策略；不要误暂停正在标注的项目。</p>
+          </div>
+          <button id="reloadAdminProjects" class="button" type="button">刷新</button>
+        </header>
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>进度</th>
+                <th>策略</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="adminProjectRows"></tbody>
+          </table>
+        </section>
+      </section>
+
+      <section id="adminTasksView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>任务查询</h2>
+            <p>按项目、标注员和完成状态定位未完成任务。</p>
+          </div>
+          <button id="reloadAdminTasks" class="button" type="button">刷新</button>
+        </header>
+        <section class="toolbar unified-toolbar">
+          <input id="adminTaskSearchInput" type="search" placeholder="搜索项目、歌曲、条目">
+          <select id="adminTaskProjectFilter"></select>
+          <select id="adminTaskUserFilter"></select>
+          <select id="adminTaskCompletionFilter">
+            <option value="">全部完成情况</option>
+            <option value="pending">整首未凑齐</option>
+            <option value="done">整首已凑齐</option>
+            <option value="user_pending">所选标注员未交</option>
+            <option value="user_done">所选标注员已交</option>
+            <option value="reviewed">已审核/完成</option>
+          </select>
+        </section>
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>条目</th>
+                <th>项目</th>
+                <th>分配</th>
+                <th>状态</th>
+                <th>进度</th>
+              </tr>
+            </thead>
+            <tbody id="adminTaskRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevAdminTaskPage" class="button secondary">上一页</button>
+          <span id="adminTaskPageInfo"></span>
+          <button id="nextAdminTaskPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="adminLogsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>系统日志</h2>
+            <p>查看登录、验证码、分配、提交、审核、最终采用和导出记录。</p>
+          </div>
+          <button id="reloadAdminLogs" class="button" type="button">刷新</button>
+        </header>
+        <section class="toolbar unified-toolbar">
+          <select id="adminLogTypeFilter">
+            <option value="actions">操作日志</option>
+            <option value="auth">登录/验证码日志</option>
+          </select>
+          <input id="adminLogSearchInput" type="search" placeholder="搜索摘要、IP、邮箱">
+        </section>
+        <section id="adminLogRows" class="compact-list"></section>
+        <footer class="pager">
+          <button id="prevAdminLogPage" class="button secondary">上一页</button>
+          <span id="adminLogPageInfo"></span>
+          <button id="nextAdminLogPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="adminExportsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>导出中心</h2>
+            <p>统一导出项目原始结果、最新提交和统计结果；每次导出都会写入系统日志。</p>
+          </div>
+          <button id="reloadAdminExports" class="button" type="button">刷新</button>
+        </header>
+        <section id="adminExportRows" class="annotation-project-grid"></section>
+      </section>
+
+      <section id="annotationProjectsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>标注项目</h2>
+            <p id="annotationProjectsCount">管理标注任务、分配、提交和审核进度</p>
+          </div>
+          <button id="reloadAnnotationProjects" class="button">刷新</button>
+        </header>
+        <div id="annotationProjectStatusTabs" class="annotation-project-tabs" role="tablist" aria-label="标注项目状态"></div>
+        <div id="annotationProjectCards" class="annotation-project-grid"></div>
+      </section>
+
+      <section id="annotationProjectView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="annotationProjectTitle">标注项目</h2>
+            <p id="annotationProjectSummary">加载中</p>
+          </div>
+          <div class="header-actions">
+            <button id="backToAnnotationProjects" class="button secondary" type="button">返回项目</button>
+            <a id="annotationExportJson" class="button secondary" href="#" target="_blank" rel="noreferrer">导出 JSON</a>
+            <a id="annotationExportCsv" class="button secondary" href="#" target="_blank" rel="noreferrer">导出 CSV</a>
+            <a id="annotationComparisonExportXlsx" class="button secondary" href="#" target="_blank" rel="noreferrer">导出对比 Excel</a>
+            <button id="openSemanticComparison" class="button secondary admin-only" type="button">结果对比</button>
+            <a id="annotationStatsExportJson" class="button secondary" href="#" target="_blank" rel="noreferrer">导出统计 JSON</a>
+            <a id="annotationStatsExportCsv" class="button secondary" href="#" target="_blank" rel="noreferrer">导出统计 CSV</a>
+            <button id="reloadAnnotationProject" class="button" type="button">刷新</button>
+          </div>
+        </header>
+        <div id="annotationProjectStats" class="stat-grid"></div>
+        <section id="annotationProjectInstructions" class="panel annotation-project-instructions" hidden></section>
+        <section id="annotationProgressPanel" class="panel admin-only annotation-progress-panel"></section>
+        <section id="annotationLyricAudioResultsPanel" class="panel admin-only annotation-lyric-audio-results-panel" hidden>
+          <div class="panel-heading-row">
+            <div>
+              <h3>歌词音频匹配结果</h3>
+              <p id="annotationLyricAudioResultsSummary" class="muted">按音频聚合查看最终匹配关系</p>
+            </div>
+            <button id="reloadAnnotationLyricAudioResults" class="button secondary compact" type="button">刷新结果</button>
+          </div>
+          <div id="annotationLyricAudioResultsStats" class="mini-stats"></div>
+          <div class="toolbar unified-toolbar compact-toolbar">
+            <input id="annotationLyricAudioResultsSearch" type="search" placeholder="搜索文件号、音频曲名、歌手或曲谱歌词">
+            <select id="annotationLyricAudioResultsStatus">
+              <option value="">全部结果</option>
+              <option value="confirmed">已确认匹配</option>
+              <option value="pending">仍待处理</option>
+              <option value="uncertain">不确定</option>
+              <option value="rejected">已排除</option>
+            </select>
+          </div>
+          <div class="table-wrap lyric-audio-result-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>音频</th>
+                  <th>确认匹配结果</th>
+                  <th>音频侧歌词摘要</th>
+                  <th>候选概况</th>
+                  <th>状态</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="annotationLyricAudioResultsRows"></tbody>
+            </table>
+          </div>
+          <footer class="pager">
+            <button id="prevAnnotationLyricAudioResultsPage" class="button secondary compact" type="button">上一页</button>
+            <span id="annotationLyricAudioResultsPageInfo"></span>
+            <button id="nextAnnotationLyricAudioResultsPage" class="button secondary compact" type="button">下一页</button>
+          </footer>
+        </section>
+        <section id="annotationAssignPanel" class="panel admin-only">
+          <div class="panel-heading-row">
+            <h3>任务分配</h3>
+            <button id="assignAnnotationBulk" class="button secondary compact" type="button">按项目批量分配</button>
+          </div>
+          <div class="annotation-assign-grid">
+            <label>标注员<select id="annotationAssigneeSelect" multiple size="5"></select></label>
+            <label>条目 ID<input id="annotationAssignItemIds" placeholder="留空时使用当前筛选页；可填 12,13,14"></label>
+            <label class="checkbox-label"><input id="annotationAssignOnlyUnassigned" type="checkbox" checked> 仅分配未分配条目</label>
+            <button id="assignAnnotationSelected" class="button" type="button">分配当前条目</button>
+          </div>
+        </section>
+        <section class="toolbar unified-toolbar annotation-item-toolbar">
+          <input id="annotationItemSearch" type="search" placeholder="搜索曲名、歌手或编号">
+          <select id="annotationItemStatusFilter">
+            <option value="">全部状态</option>
+            <option value="unassigned">未分配</option>
+            <option value="assigned">已分配</option>
+            <option value="in_progress">标注中</option>
+            <option value="ready_review">待审核</option>
+            <option value="completed">已完成</option>
+            <option value="needs_revision">需返修</option>
+          </select>
+          <select id="annotationItemAnnotatorFilter" class="admin-only" multiple size="3" title="按标注员筛选，留空为全部"></select>
+          <select id="annotationCompletionFilter" class="admin-only" title="按完成情况筛选">
+            <option value="">全部完成情况</option>
+            <option value="item_pending">整首未凑齐</option>
+            <option value="item_done">整首已凑齐</option>
+            <option value="reviewed">已审核完成</option>
+            <option value="selected_pending">所选标注员未提交</option>
+            <option value="selected_done">所选标注员已提交</option>
+          </select>
+          <label class="checkbox-label"><input id="annotationMineFilter" type="checkbox"> 只看我的任务</label>
+        </section>
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>条目</th>
+                <th>歌曲</th>
+                <th>分配</th>
+                <th>状态</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="annotationItemRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevAnnotationItemPage" class="button secondary">上一页</button>
+          <span id="annotationItemPageInfo"></span>
+          <button id="nextAnnotationItemPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="semanticComparisonView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="semanticComparisonTitle">语义标注结果对比</h2>
+            <p id="semanticComparisonMeta">按任务横向比较每位标注员的结果</p>
+          </div>
+          <div class="header-actions">
+            <button id="backToSemanticComparisonProject" class="button secondary" type="button">返回项目</button>
+            <a id="semanticComparisonExportXlsx" class="button secondary" href="#" target="_blank" rel="noreferrer">导出对比 Excel</a>
+            <button id="reloadSemanticComparison" class="button" type="button">刷新</button>
+          </div>
+        </header>
+        <section class="toolbar unified-toolbar">
+          <input id="semanticComparisonSearch" type="search" placeholder="搜索歌曲、问题、理由或标注员">
+          <select id="semanticComparisonFilter">
+            <option value="arbitration">待仲裁</option>
+            <option value="">全部任务</option>
+            <option value="disagreement">只看标注不一致</option>
+            <option value="unable">只看有无法判断</option>
+            <option value="missing">只看未全部提交</option>
+            <option value="complete">只看已全部提交</option>
+            <option value="unfinalized">未定稿</option>
+            <option value="finalized">已定稿</option>
+          </select>
+        </section>
+        <section class="panel semantic-comparison-panel">
+          <div class="panel-heading-row">
+            <div>
+              <h3>标注结果列表</h3>
+              <p id="semanticComparisonSummary" class="muted">按任务横向比较每位标注员的结果</p>
+            </div>
+          </div>
+          <div id="semanticComparisonRows" class="semantic-comparison-table-wrap"></div>
+          <footer class="pager">
+            <button id="prevSemanticComparisonPage" class="button secondary compact" type="button">上一页</button>
+            <span id="semanticComparisonPageInfo"></span>
+            <button id="nextSemanticComparisonPage" class="button secondary compact" type="button">下一页</button>
+          </footer>
+        </section>
+      </section>
+
+      <section id="annotationTaskView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="annotationTaskTitle">标注任务</h2>
+            <p id="annotationTaskMeta">加载中</p>
+          </div>
+          <div class="header-actions">
+            <button id="backToAnnotationProject" class="button secondary" type="button">返回列表</button>
+            <button id="reloadAnnotationTask" class="button" type="button">刷新</button>
+          </div>
+        </header>
+        <section id="annotationWaveformPanel" class="panel annotation-waveform-panel">
+          <div class="panel-heading-row">
+            <h3 id="annotationAudioPanelTitle">音频波形分段</h3>
+            <span id="annotationTaskStatus" class="status-pill"></span>
+          </div>
+          <audio id="annotationAudio" controls preload="metadata"></audio>
+          <div id="annotationWaveformDock"></div>
+        </section>
+        <div class="annotation-task-layout">
+          <section class="panel annotation-task-main">
+            <div class="panel-heading-row">
+              <h3>歌曲资料</h3>
+            </div>
+            <div id="annotationSongFacts" class="mini-stats"></div>
+            <div id="annotationInstructions" class="annotation-instructions"></div>
+            <div id="annotationLyrics" class="lyrics-box"></div>
+          </section>
+          <section class="panel annotation-editor-panel">
+            <div class="panel-heading-row">
+              <h3 id="annotationEditorTitle">提交标注</h3>
+              <button id="annotationAddSegment" class="button secondary compact" type="button">添加分段</button>
+            </div>
+            <div id="annotationEditor"></div>
+            <div class="annotation-submit-row">
+              <button id="submitAnnotationTask" class="button" type="button">提交标注</button>
+              <button id="finalizeAnnotationTask" class="button secondary admin-only" type="button">最终采用</button>
+            </div>
+          </section>
+        </div>
+        <section id="annotationReviewPanel" class="panel admin-only">
+          <div class="panel-heading-row">
+            <h3>审核定稿</h3>
+            <div class="row-actions">
+              <button id="approveAnnotationTask" class="button compact" type="button">审核通过</button>
+              <button id="reviseAnnotationTask" class="button secondary compact" type="button">退回返修</button>
+            </div>
+          </div>
+          <div id="annotationSubmissionList" class="annotation-submission-list"></div>
+          <label>最终结果 JSON<textarea id="annotationFinalJson" rows="8" spellcheck="false"></textarea></label>
+          <label>审核说明<textarea id="annotationReviewNote" rows="3"></textarea></label>
+        </section>
+      </section>
+
+      <section id="overviewView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>陕北民歌音频库概览</h2>
+            <p>音频、歌曲元数据、ASR、情绪标注与曲谱候选的处理状态</p>
+          </div>
+          <div class="header-actions">
+            <a class="button secondary admin-only" href="/export/important-tags.xlsx">导出重要标签</a>
+            <button id="refreshStats" class="button">刷新</button>
+          </div>
+        </header>
+        <div id="statGrid" class="stat-grid"></div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>置信度分布</h3>
+            <div id="confidenceBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>分类 Top</h3>
+            <div id="categoryBars" class="bars"></div>
+          </section>
+        </div>
+        <section class="panel">
+          <h3>ASR 任务状态</h3>
+          <div id="asrBars" class="bars compact"></div>
+        </section>
+        <section class="panel">
+          <h3>人工情绪标签</h3>
+          <div id="emotionBars" class="bars compact"></div>
+        </section>
+      </section>
+
+      <section id="bookOverviewView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>陕北民歌曲谱库概览</h2>
+            <p>图书曲目、谱面块、电子简谱和交付队列状态</p>
+          </div>
+          <button id="refreshBookOverview" class="button">刷新</button>
+        </header>
+        <div id="bookOverviewStats" class="stat-grid"></div>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>主路径总控</h3>
+            <span class="muted">版面分离 → 一首歌一个谱面 → 识别校验 → 修订反馈</span>
+          </div>
+          <div id="bookMainPathStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>当前工作流建议</h3>
+            <button id="refreshBookWorkflowStatus" class="button secondary compact" type="button">刷新建议</button>
+          </div>
+          <div id="bookWorkflowStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>长期目标完成度</h3>
+            <button id="refreshBookCompletionAudit" class="button secondary compact" type="button">刷新审计</button>
+          </div>
+          <div id="bookCompletionAudit" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>交付矩阵</h3>
+            <button id="refreshBookPipelineDeliveryMatrix" class="button secondary compact" type="button">刷新矩阵</button>
+          </div>
+          <div id="bookPipelineDeliveryMatrix" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>离线包对账</h3>
+            <button id="refreshBookHandoffPackageStatus" class="button secondary compact" type="button">刷新包状态</button>
+          </div>
+          <div id="bookHandoffPackageStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>操作员总控包</h3>
+            <button id="refreshBookOperatorPacket" class="button secondary compact" type="button">刷新总控包</button>
+          </div>
+          <div id="bookOperatorPacket" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>结构回填预检</h3>
+            <button id="refreshBookStructureReviewPreflight" class="button secondary compact" type="button">刷新结构预检</button>
+          </div>
+          <div id="bookStructureReviewPreflight" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>风险动作队列</h3>
+            <button id="refreshBookRiskActionQueue" class="button secondary compact" type="button">刷新风险队列</button>
+          </div>
+          <div id="bookRiskActionQueue" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>结构动作队列</h3>
+            <button id="refreshBookStructureActionQueue" class="button secondary compact" type="button">刷新动作队列</button>
+          </div>
+          <div id="bookStructureActionQueue" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>谱面单元门禁</h3>
+            <button id="refreshBookScoreUnitStatus" class="button secondary compact" type="button">刷新谱面单元</button>
+          </div>
+          <div id="bookScoreUnitStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>记谱识别队列</h3>
+            <button id="refreshBookCandidateRecognitionStatus" class="button secondary compact" type="button">刷新识别状态</button>
+          </div>
+          <div id="bookCandidateRecognitionStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>记谱动作队列</h3>
+            <button id="refreshBookNotationActionQueue" class="button secondary compact" type="button">刷新记谱队列</button>
+          </div>
+          <div id="bookNotationActionQueue" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>记谱反馈闭环</h3>
+            <button id="refreshBookNotationFeedbackStatus" class="button secondary compact" type="button">刷新反馈状态</button>
+          </div>
+          <div id="bookNotationFeedbackStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>歌词匹配确认</h3>
+            <button id="refreshBookLyricMatchingStatus" class="button secondary compact" type="button">刷新匹配状态</button>
+          </div>
+          <div id="bookLyricMatchingStatus" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <h3>整书流水线进度</h3>
+          <div id="bookOverviewPipeline" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>人工核验行动面板</h3>
+            <div class="row-actions">
+              <span id="bookReviewActionPanelMeta" class="muted"></span>
+              <a class="button secondary compact" href="/api/book/review-action-panel.csv?limit=50">导出 CSV</a>
+            </div>
+          </div>
+          <div id="bookReviewActionPanel" class="source-list"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>端到端运行 SOP</h3>
+            <div class="row-actions">
+              <a class="button secondary compact" href="/api/book/product-spec.md" target="_blank" rel="noreferrer">查看产品规格</a>
+              <a class="button secondary compact" href="/api/book/implementation-plan.md" target="_blank" rel="noreferrer">查看开发计划</a>
+              <a class="button secondary compact" href="/api/book/pipeline-delivery-matrix.md" target="_blank" rel="noreferrer">查看交付矩阵</a>
+              <a class="button secondary compact" href="/api/book/sop.md" target="_blank" rel="noreferrer">查看完整 SOP</a>
+            </div>
+          </div>
+          <div id="bookOverviewSop" class="source-list"></div>
+        </section>
+        <div class="two-column">
+          <section class="panel">
+            <h3>谱面 OCR 状态</h3>
+            <div id="bookOverviewBlockBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>交付队列</h3>
+            <div id="bookOverviewDeliveryBars" class="bars"></div>
+          </section>
+        </div>
+        <section class="library-actions">
+          <button class="button secondary" type="button" data-jump-view="bookLyrics">查看歌词数据列表</button>
+          <button class="button secondary" type="button" data-jump-view="bookScores">查看图书谱面 OCR</button>
+          <button class="button secondary" type="button" data-jump-view="bookDelivery">查看谱面交付队列</button>
+        </section>
+      </section>
+
+      <section id="bookLyricsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>歌词数据列表</h2>
+            <p id="bookLyricsCount">基于《陕北民歌精标注（最终完整版）》整理</p>
+          </div>
+          <button id="reloadBookLyrics" class="button">刷新</button>
+        </header>
+
+        <div id="bookLyricsStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar book-lyrics-toolbar">
+          <input id="bookLyricsSearchInput" type="search" placeholder="搜索歌序、歌名、采录地、歌词">
+          <select id="bookLyricsCategoryL1Filter">
+            <option value="">全部一级分类</option>
+          </select>
+          <select id="bookLyricsCategoryL2Filter">
+            <option value="">全部二级分类</option>
+          </select>
+          <select id="bookLyricsMatchFilter">
+            <option value="">全部匹配状态</option>
+            <option value="matched">已匹配谱面</option>
+            <option value="unmatched">未匹配谱面</option>
+            <option value="auto_draft">匹配自动谱</option>
+            <option value="needs_review">匹配复核谱</option>
+          </select>
+        </section>
+
+        <section class="table-wrap book-lyrics-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>歌序</th>
+                <th>歌曲</th>
+                <th>分类</th>
+                <th>采录信息</th>
+                <th>歌词</th>
+                <th>匹配</th>
+              </tr>
+            </thead>
+            <tbody id="bookLyricsRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevBookLyricsPage" class="button secondary">上一页</button>
+          <span id="bookLyricsPageInfo"></span>
+          <button id="nextBookLyricsPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="bookLyricAudioMatchesView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>歌词音频匹配标注</h2>
+            <p id="bookLyricAudioMatchCount">按音频聚合候选歌词，逐条确认匹配关系</p>
+          </div>
+          <button id="reloadBookLyricAudioMatches" class="button">刷新</button>
+        </header>
+
+        <div id="bookLyricAudioMatchStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar lyric-audio-match-toolbar">
+          <input id="bookLyricAudioMatchSearchInput" type="search" placeholder="搜索文件号、音频名、歌手、候选歌词">
+          <select id="bookLyricAudioMatchStatusFilter">
+            <option value="">全部审核状态</option>
+            <option value="pending">待审核</option>
+            <option value="confirmed">已确认</option>
+            <option value="rejected">已排除</option>
+            <option value="uncertain">不确定</option>
+          </select>
+          <select id="bookLyricAudioMatchScoreFilter">
+            <option value="">全部分数</option>
+            <option value="80">80 分以上</option>
+            <option value="70">70 分以上</option>
+            <option value="60">60 分以上</option>
+            <option value="50">50 分以上</option>
+          </select>
+          <select id="bookLyricAudioMatchSort">
+            <option value="max_score_desc">最高分从高到低</option>
+            <option value="max_score_asc">最高分从低到高</option>
+            <option value="candidate_count_desc">候选数从多到少</option>
+            <option value="pending_desc">待审核优先</option>
+            <option value="file_no_asc">文件号从小到大</option>
+          </select>
+        </section>
+
+        <section class="table-wrap lyric-audio-match-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>音频</th>
+                <th>音频侧歌词</th>
+                <th>候选歌词</th>
+                <th>审核进度</th>
+                <th>最高分</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="bookLyricAudioMatchRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevBookLyricAudioMatchPage" class="button secondary">上一页</button>
+          <span id="bookLyricAudioMatchPageInfo"></span>
+          <button id="nextBookLyricAudioMatchPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="bookLyricAudioMatchDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="bookLyricAudioMatchDetailTitle">歌词音频匹配详情</h2>
+            <p id="bookLyricAudioMatchDetailMeta">按音频审核候选歌词</p>
+          </div>
+          <button id="backToBookLyricAudioMatches" class="button secondary">返回列表</button>
+        </header>
+
+        <section class="audio-match-review-layout">
+          <aside class="audio-match-audio-panel">
+            <div class="section-title-row">
+              <div>
+                <h3 id="bookLyricAudioMatchAudioTitle">音频</h3>
+                <p id="bookLyricAudioMatchAudioMeta" class="muted"></p>
+              </div>
+            </div>
+            <audio id="bookLyricAudioMatchAudio" controls class="audio-player"></audio>
+            <div class="section-title-row compact-title-row">
+              <h4>时间轴歌词</h4>
+              <div class="inline-control-group">
+                <button id="locateBookLyricAudioLine" class="button secondary compact" type="button">定位当前歌词</button>
+                <select id="bookLyricAudioMatchSourceSelect"></select>
+              </div>
+            </div>
+            <div id="bookLyricAudioTimedLyrics" class="timed-lyrics-panel"></div>
+            <pre id="bookLyricAudioMatchAudioText" class="plain-lyrics-panel"></pre>
+          </aside>
+
+          <section class="audio-match-candidates-panel">
+            <div class="section-title-row">
+              <h3>候选精标歌词</h3>
+              <span id="bookLyricAudioMatchCandidateCount" class="muted"></span>
+            </div>
+            <div id="bookLyricAudioMatchCandidateCards" class="audio-match-candidate-list"></div>
+          </section>
+        </section>
+      </section>
+
+      <section id="zlyguOverviewView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中乐府数据概览</h2>
+            <p>中乐府音频、歌词、作者和专辑采集情况</p>
+          </div>
+          <button id="refreshZlyguOverview" class="button">刷新</button>
+        </header>
+        <div id="zlyguOverviewStats" class="stat-grid"></div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>数据覆盖</h3>
+            <div id="zlyguOverviewCoverageBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>采集范围</h3>
+            <div id="zlyguOverviewRange" class="source-list"></div>
+          </section>
+        </div>
+        <section class="library-actions">
+          <button class="button secondary" type="button" data-jump-view="zlygu">查看中乐府曲目列表</button>
+        </section>
+      </section>
+
+      <section id="folkOverviewView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中国民歌资源库概览</h2>
+            <p>全国民歌资源、AI 标注、ASR 和模型融合复核的总体状态</p>
+          </div>
+          <div class="header-actions">
+            <a class="button secondary" href="/api/folk/resources/export.csv">导出资源</a>
+            <button id="refreshFolkOverview" class="button">刷新</button>
+          </div>
+        </header>
+        <div id="folkOverviewStats" class="stat-grid"></div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>地域分布</h3>
+            <div id="folkProvinceBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>民族分布</h3>
+            <div id="folkNationBars" class="bars"></div>
+          </section>
+        </div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>体裁分布</h3>
+            <div id="folkGenreBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>情绪分布</h3>
+            <div id="folkEmotionBars" class="bars"></div>
+          </section>
+        </div>
+        <section class="library-actions">
+          <button class="button secondary" type="button" data-jump-view="folkResources">查看资源列表</button>
+        </section>
+      </section>
+
+      <section id="qiyueOverviewView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>器乐资源库概览</h2>
+            <p>本地民族器乐音频与龙音视频解析数据的整理情况</p>
+          </div>
+          <button id="refreshQiyueOverview" class="button">刷新</button>
+        </header>
+        <div id="qiyueOverviewStats" class="stat-grid"></div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>本地音频乐器分布</h3>
+            <div id="qiyueAudioInstrumentBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>龙音解析乐器分布</h3>
+            <div id="qiyueVideoInstrumentBars" class="bars"></div>
+          </section>
+        </div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>器乐类别</h3>
+            <div id="qiyueAudioClassBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>演奏形式</h3>
+            <div id="qiyueVideoFormBars" class="bars"></div>
+          </section>
+        </div>
+        <section class="library-actions">
+          <button class="button secondary" type="button" data-jump-view="qiyueAudio">查看本地器乐音频</button>
+          <button class="button secondary" type="button" data-jump-view="qiyueVideo">查看龙音视频解析</button>
+        </section>
+      </section>
+
+      <section id="avSongsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>情绪量化标注结果</h2>
+            <p id="avSongSummaryText">加载中</p>
+          </div>
+          <div class="header-actions">
+            <button id="reloadAvSongs" class="button">刷新</button>
+          </div>
+        </header>
+
+        <div class="av-results-layout">
+          <aside class="panel av-song-list-panel">
+            <div class="panel-heading-row compact-heading">
+              <h3>全部歌曲</h3>
+              <input id="avSongSearch" type="search" placeholder="搜索歌曲">
+            </div>
+            <div id="avAllSongs" class="av-song-list"></div>
+          </aside>
+
+          <div class="av-song-detail">
+            <section class="panel">
+              <div class="panel-heading-row">
+                <h3 id="avSongTitle">单曲结果</h3>
+                <audio id="avAudio" controls preload="metadata"></audio>
+              </div>
+              <div id="avSongMetrics" class="mini-stats"></div>
+              <div class="merge-standard">
+                <b>当前合并标准</b>
+                <span>按 1 秒网格对齐所有标注；Arousal / Valence 取中位数，主导情绪取多数票，信心取中位数；连续网格结果一致则合并。覆盖人数少于 5、A/V 分歧范围大于 2、或情绪多数票低于 50% 时标记为需复核。</span>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-title-row">
+                <h3>1 秒网格合并后的最终分段</h3>
+                <div class="row-actions">
+                  <button id="toggleFinalBoundaryLines" class="button secondary compact" type="button">隐藏合并辅助线</button>
+                  <button class="button secondary compact" type="button" data-toggle-section="finalDetail">展开明细</button>
+                </div>
+              </div>
+              <div id="avFinalTimeline" class="final-timeline"></div>
+              <section id="finalDetail" class="table-wrap collapsible-section collapsed">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>时间</th>
+                      <th>Arousal</th>
+                      <th>Valence</th>
+                      <th>主导情绪</th>
+                      <th>信心</th>
+                      <th>复核</th>
+                      <th>分歧</th>
+                    </tr>
+                  </thead>
+                  <tbody id="avFinalRows"></tbody>
+                </table>
+              </section>
+            </section>
+
+            <section class="panel">
+              <div class="section-title-row">
+                <h3>算法参考切分</h3>
+                <div class="row-actions">
+                  <button id="toggleAlgorithmBoundaryLines" class="button secondary compact" type="button">隐藏算法辅助线</button>
+                  <button class="button secondary compact" type="button" data-toggle-section="algorithmDetail">展开明细</button>
+                </div>
+              </div>
+              <div id="algorithmMetrics" class="mini-stats"></div>
+              <div id="algorithmTimeline" class="algorithm-timeline"></div>
+              <section id="algorithmDetail" class="table-wrap collapsible-section collapsed">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>时间</th>
+                      <th>变化强度</th>
+                      <th>对应人工标签</th>
+                      <th>纯度</th>
+                      <th>混合片段</th>
+                    </tr>
+                  </thead>
+                  <tbody id="algorithmRows"></tbody>
+                </table>
+              </section>
+            </section>
+
+            <section class="panel">
+              <div class="section-title-row">
+                <h3>7 人原始标注时间线</h3>
+                <button class="button secondary compact" type="button" data-toggle-section="annotatorDetail">展开明细</button>
+              </div>
+              <div id="avTimelines" class="av-timelines"></div>
+              <div id="avConsensusHeat" class="consensus-heat"></div>
+            </section>
+
+            <section id="annotatorDetail" class="panel collapsible-section collapsed">
+              <h3>当前歌曲标注明细</h3>
+              <section class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>标注员</th>
+                      <th>片段数</th>
+                      <th>覆盖率</th>
+                      <th>平均片段</th>
+                      <th>短片段</th>
+                      <th>长片段</th>
+                      <th>漏字段</th>
+                      <th>A/V 偏差</th>
+                      <th>情绪差异</th>
+                      <th>边界差异</th>
+                      <th>建议</th>
+                    </tr>
+                  </thead>
+                  <tbody id="avSongRows"></tbody>
+                </table>
+              </section>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="avAnalysisView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>情绪量化标注分析</h2>
+            <p id="avSummaryText">加载中</p>
+            <p id="avNameMapText" class="subtle-note"></p>
+          </div>
+          <div class="header-actions">
+            <button id="reloadAvAnalysis" class="button">刷新</button>
+          </div>
+        </header>
+
+        <div id="avStatGrid" class="stat-grid"></div>
+
+        <section class="panel">
+          <h3>标注员问题概览</h3>
+          <div id="avAnnotatorGrid" class="annotator-grid"></div>
+        </section>
+
+        <div class="two-column">
+          <section class="panel">
+            <h3>合并建议</h3>
+            <ol id="avMergePlan" class="ordered-notes"></ol>
+          </section>
+          <section class="panel">
+            <h3>高分歧歌曲 Top</h3>
+            <div id="avHotSongs" class="source-list"></div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <h3>算法参考切分总体效果</h3>
+          <div id="algorithmAggregate" class="mini-stats"></div>
+          <p class="muted">当前算法只使用音频特征，不使用人工标注结果参与切分；人工结果仅用于事后评估。</p>
+        </section>
+
+        <div class="two-column">
+          <section class="panel">
+            <h3>标注员两两一致性</h3>
+            <div id="avPairwiseList" class="source-list"></div>
+          </section>
+          <section class="panel">
+            <h3>建议继续看的分析</h3>
+            <ol class="ordered-notes">
+              <li>按歌曲类别分别看分歧，例如信天游、山曲、小调是否有不同的标注难度。</li>
+              <li>按 Arousal 高低和 Valence 正负分区，找出最容易混淆的象限。</li>
+              <li>统计每个标注员的情绪类别偏好，判断是否有人过度使用 Lively、Deep 或 Sad。</li>
+              <li>把“需复核”片段单独导出，形成第四人仲裁清单。</li>
+              <li>用最终分段反推统一切分规范，给标注员二次培训。</li>
+            </ol>
+          </section>
+        </div>
+      </section>
+
+      <section id="songsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>歌曲列表</h2>
+            <p id="songCount">加载中</p>
+          </div>
+          <div class="header-actions">
+            <a class="button secondary" href="/export/important-tags.xlsx">导出重要标签</a>
+            <button id="reloadSongs" class="button">刷新</button>
+          </div>
+        </header>
+
+        <section class="toolbar">
+          <input id="searchInput" type="search" placeholder="搜索编号、歌名、歌手、文件名">
+          <select id="confidenceFilter">
+            <option value="">全部置信度</option>
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
+          </select>
+          <select id="reviewFilter">
+            <option value="">全部状态</option>
+            <option value="1">需复核</option>
+            <option value="0">已确认</option>
+          </select>
+          <select id="lyricsFilter">
+            <option value="">全部歌词</option>
+            <option value="1">有内嵌歌词</option>
+            <option value="0">无内嵌歌词</option>
+          </select>
+          <select id="asrFilter">
+            <option value="">全部 ASR</option>
+            <option value="1">有豆包结果</option>
+            <option value="0">无豆包结果</option>
+          </select>
+          <select id="emotionStateFilter">
+            <option value="">全部情绪标注</option>
+            <option value="1">有情绪标注</option>
+            <option value="0">无情绪标注</option>
+          </select>
+          <select id="emotionFilter">
+            <option value="">全部情绪</option>
+          </select>
+          <select id="categoryFilter">
+            <option value="">全部分类</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>曲目</th>
+                <th>歌手</th>
+                <th>分类</th>
+                <th>情绪</th>
+                <th>置信度</th>
+                <th>状态</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="songRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevPage" class="button secondary">上一页</button>
+          <span id="pageInfo"></span>
+          <button id="nextPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="zlyguView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中乐府数据</h2>
+            <p id="zlyguCount">加载中</p>
+          </div>
+          <button id="reloadZlygu" class="button">刷新</button>
+        </header>
+
+        <div id="zlyguStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar zlygu-toolbar">
+          <input id="zlyguSearchInput" type="search" placeholder="搜索 ID、曲名、作者">
+          <select id="zlyguLyricsFilter">
+            <option value="">全部歌词</option>
+            <option value="1">有歌词</option>
+            <option value="0">无歌词</option>
+          </select>
+          <select id="zlyguAudioFilter">
+            <option value="">全部音频</option>
+            <option value="1">有音频地址</option>
+            <option value="0">无音频地址</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>曲目</th>
+                <th>作者</th>
+                <th>专辑</th>
+                <th>歌词</th>
+                <th>播放</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="zlyguRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevZlyguPage" class="button secondary">上一页</button>
+          <span id="zlyguPageInfo"></span>
+          <button id="nextZlyguPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="zlyguDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="zlyguTitle">中乐府曲目详情</h2>
+            <p id="zlyguMeta"></p>
+          </div>
+          <div class="header-actions">
+            <button id="backToZlygu" class="button secondary" type="button">返回曲目列表</button>
+          </div>
+        </header>
+
+        <div class="zlygu-detail-layout">
+          <section class="panel zlygu-profile-panel">
+            <div class="zlygu-detail-head">
+              <img id="zlyguCover" alt="">
+              <div>
+                <h3 id="zlyguDetailTitle">基础信息</h3>
+                <div id="zlyguBadges" class="badge-row"></div>
+              </div>
+            </div>
+            <audio id="zlyguAudio" controls preload="metadata"></audio>
+            <a id="zlyguAudioLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开源站音频</a>
+          </section>
+
+          <section class="panel">
+            <h3>歌词文本</h3>
+            <div id="zlyguLyrics" class="lyrics zlygu-lyrics"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="qiyueAudioView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>本地器乐音频</h2>
+            <p id="qiyueAudioCount">加载中</p>
+          </div>
+          <button id="reloadQiyueAudio" class="button">刷新</button>
+        </header>
+
+        <section class="toolbar qiyue-toolbar">
+          <input id="qiyueAudioSearchInput" type="search" placeholder="搜索 ID、曲名、演奏者、专辑">
+          <input id="qiyueAudioInstrumentInput" type="search" placeholder="乐器">
+          <select id="qiyueAudioClassFilter">
+            <option value="">全部类别</option>
+            <option value="弹">弹</option>
+            <option value="吹">吹</option>
+            <option value="拉">拉</option>
+            <option value="打">打</option>
+          </select>
+          <select id="qiyueAudioFilter">
+            <option value="">全部音频</option>
+            <option value="1">有 OSS 音频</option>
+            <option value="0">无 OSS 音频</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>曲目</th>
+                <th>乐器</th>
+                <th>专辑/来源</th>
+                <th>时长</th>
+                <th>音频</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="qiyueAudioRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevQiyueAudioPage" class="button secondary">上一页</button>
+          <span id="qiyueAudioPageInfo"></span>
+          <button id="nextQiyueAudioPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="qiyueAudioDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="qiyueAudioTitle">器乐音频详情</h2>
+            <p id="qiyueAudioMeta"></p>
+          </div>
+          <div class="header-actions">
+            <button id="backToQiyueAudio" class="button secondary" type="button">返回本地器乐音频</button>
+          </div>
+        </header>
+
+        <div class="folk-detail-layout">
+          <section class="panel folk-player-panel">
+            <div class="folk-cover">器</div>
+            <h3 id="qiyueAudioPlayerTitle">资源详情</h3>
+            <p id="qiyueAudioPlayerSubtitle" class="muted"></p>
+            <audio id="qiyueAudioPlayer" controls preload="metadata"></audio>
+            <a id="qiyueAudioLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开音频地址</a>
+            <div id="qiyueAudioBasicFacts" class="source-list"></div>
+          </section>
+
+          <div class="folk-detail-main">
+            <section class="panel">
+              <h3>专辑与文件</h3>
+              <div id="qiyueAudioFileFacts" class="source-list"></div>
+            </section>
+            <section class="panel">
+              <h3>解析信息</h3>
+              <pre id="qiyueAudioParseJson" class="json-block">{}</pre>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="qiyueVideoView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>龙音视频解析</h2>
+            <p id="qiyueVideoCount">加载中</p>
+          </div>
+          <button id="reloadQiyueVideo" class="button">刷新</button>
+        </header>
+
+        <section class="toolbar qiyue-toolbar">
+          <input id="qiyueVideoSearchInput" type="search" placeholder="搜索 ID、曲目、演奏者、专辑">
+          <input id="qiyueVideoInstrumentInput" type="search" placeholder="主奏乐器">
+          <input id="qiyueVideoFormInput" type="search" placeholder="演奏形式">
+          <select id="qiyueVideoAudioFilter">
+            <option value="">全部音频</option>
+            <option value="1">有提取音频</option>
+            <option value="0">无提取音频</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>曲目</th>
+                <th>乐器/形式</th>
+                <th>演奏者</th>
+                <th>专辑</th>
+                <th>音频</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="qiyueVideoRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevQiyueVideoPage" class="button secondary">上一页</button>
+          <span id="qiyueVideoPageInfo"></span>
+          <button id="nextQiyueVideoPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="qiyueVideoDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="qiyueVideoTitle">龙音视频解析详情</h2>
+            <p id="qiyueVideoMeta"></p>
+          </div>
+          <div class="header-actions">
+            <button id="backToQiyueVideo" class="button secondary" type="button">返回龙音视频解析</button>
+          </div>
+        </header>
+
+        <div class="qiyue-video-detail-layout">
+          <section class="panel qiyue-media-panel">
+            <img id="qiyueVideoScreenshot" alt="视频截图">
+            <audio id="qiyueVideoAudio" controls preload="metadata"></audio>
+            <a id="qiyueVideoAudioLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开提取音频</a>
+            <a id="qiyueVideoScreenshotLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开视频截图</a>
+            <div id="qiyueVideoBasicFacts" class="source-list"></div>
+          </section>
+
+          <div class="folk-detail-main">
+            <div class="two-column">
+              <section class="panel">
+                <h3>曲目信息</h3>
+                <div id="qiyueVideoTrackFacts" class="source-list"></div>
+              </section>
+              <section class="panel">
+                <h3>处理信息</h3>
+                <div id="qiyueVideoProcessFacts" class="source-list"></div>
+              </section>
+            </div>
+            <section class="panel">
+              <h3>截图识别文本</h3>
+              <pre id="qiyueVideoRecognizedText" class="json-block"></pre>
+            </section>
+            <section class="panel">
+              <h3>结构化识别 JSON</h3>
+              <pre id="qiyueVideoRecognizedJson" class="json-block">{}</pre>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="rymusicOverviewView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>人音曲库概览</h2>
+            <p>人民音乐出版社曲库资源的采集、媒体地址和专辑覆盖情况</p>
+          </div>
+          <button id="refreshRymusicOverview" class="button">刷新</button>
+        </header>
+        <div id="rymusicOverviewStats" class="stat-grid"></div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>文件类型</h3>
+            <div id="rymusicFileTypeBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>专辑 Top</h3>
+            <div id="rymusicAlbumBars" class="bars"></div>
+          </section>
+        </div>
+        <div class="two-column">
+          <section class="panel">
+            <h3>作曲 Top</h3>
+            <div id="rymusicComposerBars" class="bars"></div>
+          </section>
+          <section class="panel">
+            <h3>演奏/演唱 Top</h3>
+            <div id="rymusicPerformerBars" class="bars"></div>
+          </section>
+        </div>
+        <section class="library-actions">
+          <button class="button secondary" type="button" data-jump-view="rymusicResources">查看人音曲库资源</button>
+        </section>
+      </section>
+
+      <section id="rymusicResourcesView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>人音曲库资源列表</h2>
+            <p id="rymusicResourceCount">加载中</p>
+          </div>
+          <button id="reloadRymusicResources" class="button">刷新</button>
+        </header>
+
+        <section class="toolbar rymusic-toolbar">
+          <input id="rymusicSearchInput" type="search" placeholder="搜索 ID、曲目、作曲、演奏、专辑">
+          <input id="rymusicAlbumInput" type="search" placeholder="专辑">
+          <input id="rymusicPerformerInput" type="search" placeholder="演奏/演唱">
+          <select id="rymusicFileTypeFilter">
+            <option value="">全部类型</option>
+            <option value="mp3">mp3</option>
+            <option value="mp4">mp4</option>
+            <option value="xml">xml</option>
+          </select>
+          <select id="rymusicOssFilter">
+            <option value="">全部 OSS</option>
+            <option value="1">已上传 OSS</option>
+            <option value="0">未上传 OSS</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>曲目</th>
+                <th>作曲/演奏</th>
+                <th>专辑</th>
+                <th>类型</th>
+                <th>媒体</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="rymusicResourceRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevRymusicPage" class="button secondary">上一页</button>
+          <span id="rymusicPageInfo"></span>
+          <button id="nextRymusicPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="rymusicDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="rymusicDetailTitle">人音曲库资源详情</h2>
+            <p id="rymusicDetailMeta"></p>
+          </div>
+          <div class="header-actions">
+            <button id="backToRymusicResources" class="button secondary" type="button">返回资源列表</button>
+          </div>
+        </header>
+
+        <div class="folk-detail-layout">
+          <section class="panel folk-player-panel">
+            <img id="rymusicCover" class="rymusic-cover" alt="封面">
+            <h3 id="rymusicPlayerTitle">资源详情</h3>
+            <p id="rymusicPlayerSubtitle" class="muted"></p>
+            <audio id="rymusicAudio" controls preload="metadata"></audio>
+            <video id="rymusicVideo" controls preload="metadata"></video>
+            <a id="rymusicMediaLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开媒体地址</a>
+            <div id="rymusicBasicFacts" class="source-list"></div>
+          </section>
+
+          <div class="folk-detail-main">
+            <section class="panel">
+              <h3>出版与专辑</h3>
+              <div id="rymusicPublishFacts" class="source-list"></div>
+            </section>
+            <section class="panel">
+              <h3>源站原始 JSON</h3>
+              <pre id="rymusicRawJson" class="json-block">{}</pre>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="folkResourcesView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中国民歌资源列表</h2>
+            <p id="folkResourceCount">加载中</p>
+          </div>
+          <div class="header-actions">
+            <a id="folkExportLink" class="button secondary" href="/api/folk/resources/export.csv" target="_blank" rel="noreferrer">导出 CSV</a>
+            <button id="reloadFolkResources" class="button">刷新</button>
+          </div>
+        </header>
+
+        <section class="toolbar folk-toolbar">
+          <input id="folkSearchInput" type="search" placeholder="搜索 ID、标题、演唱者">
+          <input id="folkProvinceInput" type="search" placeholder="省份">
+          <input id="folkNationInput" type="search" placeholder="民族">
+          <input id="folkGenreInput" type="search" placeholder="体裁">
+          <input id="folkEmotionInput" type="search" placeholder="情绪">
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>曲目</th>
+                <th>地域/民族</th>
+                <th>体裁</th>
+                <th>情绪/场景</th>
+                <th>音频</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="folkResourceRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevFolkPage" class="button secondary">上一页</button>
+          <span id="folkPageInfo"></span>
+          <button id="nextFolkPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="folkDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="folkDetailTitle">中国民歌资源详情</h2>
+            <p id="folkDetailMeta"></p>
+          </div>
+          <div class="header-actions">
+            <button id="backToFolkResources" class="button secondary" type="button">返回资源列表</button>
+          </div>
+        </header>
+
+        <div class="folk-detail-layout">
+          <section class="panel folk-player-panel">
+            <div class="folk-cover" id="folkCover">民</div>
+            <h3 id="folkPlayerTitle">资源详情</h3>
+            <p id="folkPlayerSubtitle" class="muted"></p>
+            <audio id="folkAudio" controls preload="metadata"></audio>
+            <a id="folkAudioLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开音频地址</a>
+            <div id="folkBasicFacts" class="source-list"></div>
+          </section>
+
+          <div class="folk-detail-main">
+            <section class="panel folk-summary-panel">
+              <div class="section-title-row">
+                <h3>AI 全量标注报告</h3>
+                <div id="folkLabelStatus" class="badge-row"></div>
+              </div>
+              <p id="folkAiSummary" class="folk-ai-summary"></p>
+            </section>
+
+            <div class="two-column">
+              <section class="panel">
+                <h3>地域与体裁</h3>
+                <div id="folkGenreRegion" class="source-list"></div>
+              </section>
+              <section class="panel">
+                <h3>乐器与演唱</h3>
+                <div id="folkInstruments" class="source-list"></div>
+              </section>
+            </div>
+
+            <div class="two-column">
+              <section class="panel">
+                <h3>旋律与节奏</h3>
+                <div id="folkAcoustics" class="source-list"></div>
+              </section>
+              <section class="panel">
+                <h3>语义与场景</h3>
+                <div id="folkSemantics" class="source-list"></div>
+              </section>
+            </div>
+
+            <section class="panel">
+              <h3>DSP 特征摘要</h3>
+              <div id="folkDspStats" class="mini-stats"></div>
+            </section>
+
+            <section class="panel">
+              <h3>ASR 歌词识别</h3>
+              <div id="folkAsrContent" class="folk-asr-grid"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="folkReviewQueueView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中国民歌人工复核队列</h2>
+            <p id="folkReviewCount">加载中</p>
+          </div>
+          <div class="header-actions">
+            <select id="folkReviewStatusFilter">
+              <option value="PENDING">PENDING</option>
+              <option value="AUTO">AUTO</option>
+              <option value="DONE">DONE</option>
+              <option value="">全部</option>
+            </select>
+            <button id="reloadFolkReviewQueue" class="button">刷新</button>
+          </div>
+        </header>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>资源 ID</th>
+                <th>曲目</th>
+                <th>状态</th>
+                <th>优先级</th>
+                <th>分歧</th>
+                <th>原因</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="folkReviewRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevFolkReviewPage" class="button secondary">上一页</button>
+          <span id="folkReviewPageInfo"></span>
+          <button id="nextFolkReviewPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="folkReviewDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="folkReviewTitle">模型对比复核</h2>
+            <p id="folkReviewMeta"></p>
+          </div>
+          <div class="header-actions">
+            <button id="backToFolkReviewQueue" class="button secondary" type="button">返回复核队列</button>
+          </div>
+        </header>
+
+        <div class="folk-review-layout">
+          <aside class="panel folk-review-side">
+            <h3>资源信息</h3>
+            <div id="folkReviewFacts" class="source-list"></div>
+            <audio id="folkReviewAudio" controls preload="metadata"></audio>
+            <div id="folkReviewReasons" class="badge-row"></div>
+            <h3>人工提交</h3>
+            <label class="book-song-editor-label">审核人<input id="folkReviewer" value="manual"></label>
+            <label class="book-song-editor-label">备注<textarea id="folkReviewNote" rows="3"></textarea></label>
+            <label class="inline-field"><input id="folkUpdateResource" type="checkbox" checked> 同步更新资源字段</label>
+            <button id="submitFolkReview" class="button admin-only" type="button">提交人工选择</button>
+          </aside>
+
+          <div class="folk-review-main">
+            <section class="panel">
+              <div class="section-title-row">
+                <h3>字段级对比</h3>
+                <div id="folkReviewSourceButtons" class="row-actions"></div>
+              </div>
+              <section class="table-wrap compact-table-wrap">
+                <table>
+                  <thead id="folkReviewCompareHead"></thead>
+                  <tbody id="folkReviewCompareRows"></tbody>
+                </table>
+              </section>
+            </section>
+
+            <div class="two-column">
+              <section class="panel">
+                <h3>提交候选 JSON</h3>
+                <textarea id="folkChosenEditor" class="json-editor" spellcheck="false"></textarea>
+                <div class="row-actions">
+                  <button id="validateFolkChosen" class="button secondary compact" type="button">校验 JSON</button>
+                </div>
+              </section>
+              <section class="panel">
+                <h3>ASR/歌词</h3>
+                <div id="folkReviewAsr" class="folk-asr-grid"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="folkModelStatsView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中国民歌模型标签统计</h2>
+            <p id="folkModelStatsSummary">加载中</p>
+          </div>
+          <div class="header-actions">
+            <label class="inline-field">Top N <input id="folkModelTopN" type="number" min="5" max="200" value="20"></label>
+            <button id="reloadFolkModelStats" class="button">刷新</button>
+          </div>
+        </header>
+        <div id="folkModelSummaryCards" class="stat-grid score-stat-grid"></div>
+        <section id="folkModelFields" class="model-field-list"></section>
+      </section>
+
+      <section id="folkVocabLabView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>中国民歌词表提案</h2>
+            <p>读取已生成的标准词表与知识库建设建议，当前页面不触发新的大模型生成。</p>
+          </div>
+          <div class="header-actions">
+            <select id="folkVocabField">
+              <option value="vocal_form">vocal_form</option>
+              <option value="genre_l2">genre_l2</option>
+              <option value="nation">nation</option>
+              <option value="province">province</option>
+              <option value="language_dialect">language_dialect</option>
+              <option value="scene">scene</option>
+              <option value="emotion">emotion</option>
+              <option value="instruments">instruments</option>
+              <option value="genre_l1">genre_l1</option>
+              <option value="city">city</option>
+            </select>
+            <button id="reloadFolkVocab" class="button">读取缓存</button>
+          </div>
+        </header>
+
+        <div class="two-column">
+          <section class="panel">
+            <h3>输入统计摘要</h3>
+            <div id="folkVocabSummary" class="source-list"></div>
+            <pre id="folkVocabSourceJson" class="json-block">{}</pre>
+          </section>
+          <section class="panel">
+            <h3>词表提案 JSON</h3>
+            <pre id="folkVocabProposalJson" class="json-block">{}</pre>
+          </section>
+        </div>
+        <section class="panel">
+          <h3>提案解读</h3>
+          <div id="folkVocabProposalView" class="vocab-proposal-view"></div>
+        </section>
+      </section>
+
+      <section id="detailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="detailTitle">歌曲详情</h2>
+            <p id="detailMeta"></p>
+          </div>
+          <button id="backToSongs" class="button secondary">返回列表</button>
+        </header>
+
+        <div class="detail-layout">
+          <section class="panel edit-panel">
+            <h3>基础信息</h3>
+            <form id="songForm" class="form-grid">
+              <label>曲目<input name="title"></label>
+              <label>歌手<input name="artist"></label>
+              <label>专辑<input name="album"></label>
+              <label>一级分类<input name="category"></label>
+              <label>二级分类<input name="subcategory"></label>
+              <label>置信度
+                <select name="data_confidence">
+                  <option value="high">high</option>
+                  <option value="medium">medium</option>
+                  <option value="low">low</option>
+                </select>
+              </label>
+              <label class="wide">说明<input name="description"></label>
+              <label class="wide">备注<textarea name="remark" rows="3"></textarea></label>
+              <label class="check"><input name="needs_review" type="checkbox"> 需人工复核</label>
+              <label class="wide">复核原因<input name="review_reason"></label>
+              <button class="button" type="submit">保存修改</button>
+            </form>
+          </section>
+
+          <section class="panel player-panel">
+            <h3>音频与歌词</h3>
+            <audio id="audioPlayer" controls preload="metadata"></audio>
+            <div id="emotionTimeline" class="emotion-timeline"></div>
+            <a id="audioLink" class="text-link" href="#" target="_blank" rel="noreferrer">打开 OSS 音频</a>
+            <div id="lyricsList" class="lyrics"></div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <h3>人工情绪分段</h3>
+          <div id="emotionList" class="source-list"></div>
+        </section>
+
+        <section class="panel">
+          <h3>来源证据</h3>
+          <div id="sourceList" class="source-list"></div>
+        </section>
+
+        <section class="panel">
+          <h3>ASR 任务</h3>
+          <div id="asrList" class="source-list"></div>
+        </section>
+      </section>
+
+      <section id="scoresView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>曲谱候选</h2>
+            <p id="scoreCount">加载中</p>
+          </div>
+          <button id="reloadScores" class="button">刷新</button>
+        </header>
+
+        <div id="scoreStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar score-toolbar">
+          <input id="scoreSearchInput" type="search" placeholder="搜索编号、曲名、歌手、来源、URL">
+          <select id="scoreReviewFilter">
+            <option value="">全部复核状态</option>
+            <option value="pending">待复核</option>
+            <option value="accepted">已确认</option>
+            <option value="rejected">已拒绝</option>
+          </select>
+          <select id="scoreKindFilter">
+            <option value="">全部资源类型</option>
+            <option value="image">图片</option>
+            <option value="pdf">PDF</option>
+            <option value="page">网页</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>歌曲</th>
+                <th>来源</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="scoreRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevScorePage" class="button secondary">上一页</button>
+          <span id="scorePageInfo"></span>
+          <button id="nextScorePage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="bookScoresView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>图书谱面 OCR</h2>
+            <p id="bookScoreCount">加载中</p>
+          </div>
+          <button id="reloadBookScores" class="button">刷新</button>
+        </header>
+
+        <div id="bookScoreStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar book-score-toolbar">
+          <input id="bookScoreSearchInput" type="search" placeholder="搜索曲序、曲名、页码、OCR 文本">
+          <select id="bookScoreVolumeFilter">
+            <option value="">全部册</option>
+            <option value="上">上册</option>
+            <option value="下">下册</option>
+          </select>
+          <select id="bookScoreStatusFilter">
+            <option value="">全部状态</option>
+            <option value="ocr_done">OCR 完成</option>
+            <option value="ocr_needs_review">OCR 需复核</option>
+            <option value="ocr_error">OCR 出错</option>
+            <option value="sequence_ok">曲序匹配</option>
+            <option value="pending">待处理</option>
+            <option value="sequence_rejected">曲序排除</option>
+          </select>
+          <select id="bookScoreMatchFilter">
+            <option value="">全部匹配</option>
+            <option value="matched">已匹配 Excel</option>
+            <option value="unmatched">未匹配 Excel</option>
+          </select>
+        </section>
+
+        <section id="bookScoreRows" class="book-score-list"></section>
+        <footer class="pager">
+          <button id="prevBookScorePage" class="button secondary">上一页</button>
+          <span id="bookScorePageInfo"></span>
+          <button id="nextBookScorePage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="bookDeliveryView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>谱面交付队列</h2>
+            <p id="bookDeliveryCount">加载中</p>
+          </div>
+          <div class="header-actions">
+            <label class="inline-field">
+              批量
+              <input id="bookDeliveryBatchLimit" type="number" min="1" max="5" value="2">
+            </label>
+            <button id="recognizeBookDeliveryBatch" class="button admin-only">批量高精识别</button>
+            <button id="reloadBookDelivery" class="button secondary">刷新</button>
+          </div>
+        </header>
+
+        <div id="bookDeliveryStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar book-delivery-toolbar">
+          <input id="bookDeliverySearchInput" type="search" placeholder="搜索曲序、曲名、分类">
+          <select id="bookDeliveryStatusFilter">
+            <option value="">全部状态</option>
+            <option value="needs_review">需复核</option>
+            <option value="no_score_block">无谱面块</option>
+            <option value="no_notation">无电子简谱</option>
+            <option value="no_high_quality">未高精识别</option>
+            <option value="ready_review">待确认</option>
+            <option value="accepted">已确认</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>曲序</th>
+                <th>歌曲</th>
+                <th>状态</th>
+                <th>谱面</th>
+                <th>识别</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="bookDeliveryRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevBookDeliveryPage" class="button secondary">上一页</button>
+          <span id="bookDeliveryPageInfo"></span>
+          <button id="nextBookDeliveryPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="bookCandidatesView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>歌曲候选</h2>
+            <p id="bookCandidateCount">加载中</p>
+          </div>
+          <div class="header-actions">
+            <label class="inline-field admin-only">
+              流水线
+              <input id="bookCandidatePipelineLimit" type="number" min="1" max="500" value="100">
+            </label>
+            <label class="inline-field admin-only">
+              <input id="bookCandidatePipelineDryRun" type="checkbox" checked>
+              试跑
+            </label>
+            <button id="runBookCandidatePipeline" class="button admin-only" type="button">运行候选流水线</button>
+            <button id="runBookPipelineQualityAudit" class="button secondary" type="button">质量审计</button>
+            <button id="runBookLyricMatchingEvaluation" class="button secondary" type="button">匹配评估</button>
+            <button id="runBookTrainingSampleCoverage" class="button secondary" type="button">样本覆盖率</button>
+            <button id="checkBookExportReadiness" class="button secondary">导出检查</button>
+            <a class="button secondary" href="/api/book/export/approved.json">导出 JSON</a>
+            <a class="button secondary" href="/api/book/export/approved.csv">导出 CSV</a>
+            <a class="button secondary" href="/api/book/export/review-package.json">核验包 JSON</a>
+            <a class="button secondary" href="/api/book/export/review-package.csv">核验包 CSV</a>
+            <a class="button secondary" href="/api/book/review-queue.json">页面队列 JSON</a>
+            <a class="button secondary" href="/api/book/review-queue.csv">页面队列 CSV</a>
+            <a class="button secondary" href="/api/book/export/review-feedback.json">反馈 JSON</a>
+            <a class="button secondary" href="/api/book/export/review-feedback.csv">反馈 CSV</a>
+            <a class="button secondary" href="/api/book/export/training-samples.json">训练样本 JSON</a>
+            <a class="button secondary" href="/api/book/export/training-samples.csv">训练样本 CSV</a>
+            <a class="button secondary" href="/api/book/export/training-seed-package.json">训练种子包 JSON</a>
+            <a class="button secondary" href="/api/book/export/training-seed-package.csv">训练种子包 CSV</a>
+            <button id="reloadBookCandidates" class="button secondary">刷新</button>
+          </div>
+        </header>
+
+        <div id="bookCandidateStats" class="stat-grid score-stat-grid"></div>
+        <section class="toolbar book-delivery-toolbar admin-only">
+          <input id="bookReviewDecisionFile" type="file" accept=".csv,text/csv">
+          <label class="inline-field">
+            <input id="bookReviewDecisionApply" type="checkbox">
+            正式导入
+          </label>
+          <button id="preflightBookReviewReturn" class="button secondary" type="button">预检核验 CSV</button>
+          <button id="importBookReviewDecisions" class="button secondary" type="button">导入核验 CSV</button>
+          <label class="inline-field">
+            handoff 目录
+            <input id="bookReviewHandoffDir" type="text" value="handoff/book_risk_review_assets_current">
+          </label>
+          <label class="inline-field">
+            zip
+            <input id="bookReviewHandoffZip" type="text" value="handoff/book_risk_review_assets_current.zip">
+          </label>
+          <button id="prepareBookReviewHandoff" class="button secondary" type="button">准备 handoff 包</button>
+          <button id="checkBookReviewHandoff" class="button secondary" type="button">校验 handoff 包</button>
+          <label class="inline-field">
+            <input id="bookReviewHandoffApply" type="checkbox">
+            正式封装导入
+          </label>
+          <button id="processBookReviewHandoffReturn" class="button secondary" type="button">处理回传 dry-run</button>
+          <button id="loadBookReviewHandoffReturnReceipt" class="button secondary" type="button">查看处理收据</button>
+          <input id="bookTrainingSeedImportFile" type="file" accept=".csv,text/csv">
+          <label class="inline-field">
+            <input id="bookTrainingSeedImportApply" type="checkbox">
+            正式导入种子包
+          </label>
+          <button id="importBookTrainingSeedPackage" class="button secondary" type="button">导入种子 CSV</button>
+        </section>
+        <section class="toolbar book-delivery-toolbar admin-only">
+          <label class="inline-field">
+            册
+            <select id="bookWindowPlanVolume">
+              <option value="">全书</option>
+              <option value="上">上册</option>
+              <option value="下">下册</option>
+            </select>
+          </label>
+          <label class="inline-field">
+            窗口页数
+            <input id="bookWindowPlanPages" type="number" min="1" max="500" value="50">
+          </label>
+          <label class="inline-field">
+            最多窗口
+            <input id="bookWindowPlanMax" type="number" min="1" max="200" value="5">
+          </label>
+          <button id="planBookPipelineWindows" class="button secondary" type="button">窗口计划</button>
+        </section>
+        <div id="bookReviewDecisionImportSummary" class="export-readiness-summary"></div>
+        <div id="bookTrainingSeedImportSummary" class="export-readiness-summary"></div>
+        <div id="bookWindowPipelineSummary" class="export-readiness-summary"></div>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>窗口流水线看板</h3>
+            <button id="reloadBookWindowRuns" class="button secondary compact" type="button">刷新窗口运行</button>
+          </div>
+          <div id="bookWindowResumeAdvice" class="source-list"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>运行</th>
+                  <th>状态</th>
+                  <th>窗口</th>
+                  <th>范围</th>
+                  <th>风险变化</th>
+                  <th>停止原因</th>
+                </tr>
+              </thead>
+              <tbody id="bookWindowRunRows"></tbody>
+            </table>
+          </div>
+          <div id="bookWindowRunDetail" class="source-list"></div>
+        </section>
+        <div id="bookPipelineQualitySummary" class="export-readiness-summary"></div>
+        <div id="bookLyricMatchingEvaluationSummary" class="export-readiness-summary"></div>
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>训练样本覆盖率</h3>
+            <span id="bookTrainingSampleCoverageMeta" class="muted"></span>
+          </div>
+          <div id="bookTrainingSampleCoverageSummary" class="source-list"></div>
+        </section>
+        <div id="bookExportReadinessSummary" class="export-readiness-summary"></div>
+        <div id="bookPipelineRunSummary" class="export-readiness-summary"></div>
+        <div id="bookCandidateQueueFilterSummary" class="export-readiness-summary"></div>
+
+        <section class="toolbar book-delivery-toolbar">
+          <input id="bookCandidateSearchInput" type="search" placeholder="搜索候选 ID、曲序、曲名、歌词">
+          <select id="bookCandidateRiskFilter">
+            <option value="">全部风险</option>
+            <option value="P0">P0 阻断</option>
+            <option value="P1">P1 高风险</option>
+            <option value="P2">P2 待抽查</option>
+            <option value="P3">P3 低风险</option>
+          </select>
+          <select id="bookCandidateStatusFilter">
+            <option value="">全部交付候选</option>
+            <option value="candidate_built">已生成候选</option>
+            <option value="needs_review">需复核</option>
+            <option value="matched">已匹配</option>
+            <option value="reviewed">已复核</option>
+            <option value="approved">已确认</option>
+            <option value="merged">已合并</option>
+          </select>
+          <select id="bookCandidateVolumeFilter">
+            <option value="">全部册</option>
+            <option value="上">上册</option>
+            <option value="下">下册</option>
+          </select>
+          <button id="bulkPreviewTop1LyricMatches" class="button secondary compact admin-only" type="button">批量预检 top1</button>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>候选</th>
+                <th>曲名</th>
+                <th>位置</th>
+                <th>块</th>
+                <th>风险</th>
+                <th>歌词匹配</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="bookCandidateRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevBookCandidatePage" class="button secondary">上一页</button>
+          <span id="bookCandidatePageInfo"></span>
+          <button id="nextBookCandidatePage" class="button secondary">下一页</button>
+        </footer>
+
+        <section id="bookCandidateDetailPanel" class="panel hidden">
+          <div class="section-title-row">
+            <h3 id="bookCandidateDetailTitle">候选详情</h3>
+            <div class="row-actions">
+              <button id="bookCandidateDetailApprove" class="button compact admin-only" type="button">确认</button>
+              <button id="bookCandidateDetailHold" class="button secondary compact admin-only" type="button">挂起</button>
+              <button id="closeBookCandidateDetail" class="button secondary compact" type="button">关闭</button>
+            </div>
+          </div>
+          <div id="bookCandidateDetailFacts" class="mini-stats"></div>
+          <section class="book-candidate-block-tools admin-only">
+            <div class="section-title-row">
+              <h4>块级修正</h4>
+              <span class="muted">先在候选块中勾选要移动的块</span>
+            </div>
+            <div class="book-candidate-tool-row">
+              <label>目标候选 ID<input id="bookCandidateMoveTarget" inputmode="numeric" placeholder="例如 128"></label>
+              <button id="bookCandidateMoveSelected" class="button secondary compact" type="button">移动所选块</button>
+              <button id="bookCandidateMergeIntoTarget" class="button secondary compact" type="button">合并到目标候选</button>
+              <label>新候选曲序<input id="bookCandidateSplitSeq" inputmode="numeric" placeholder="可留空"></label>
+              <label>新候选标题<input id="bookCandidateSplitTitle" placeholder="可留空"></label>
+              <button id="bookCandidateSplitSelected" class="button compact" type="button">拆成新候选</button>
+            </div>
+          </section>
+          <section>
+            <h4>歌曲单元来源</h4>
+            <div id="bookCandidateSongUnitSource" class="source-list"></div>
+          </section>
+          <section>
+            <h4>谱面单元</h4>
+            <div id="bookCandidateScoreUnitStatus" class="source-list"></div>
+          </section>
+          <section>
+            <div class="section-title-row">
+              <h4>记谱校验</h4>
+              <div class="row-actions">
+                <a class="button secondary compact" href="/api/book/export/training-samples.csv?task=notation_recognition">导出记谱样本 CSV</a>
+                <a class="button secondary compact" href="/api/book/export/training-samples.json?task=notation_recognition">JSON</a>
+              </div>
+            </div>
+            <div id="bookCandidateNotationWorkbench" class="book-candidate-notation-workbench"></div>
+          </section>
+          <section>
+            <h4>核验进度</h4>
+            <div id="bookCandidateReviewProgress" class="source-list"></div>
+          </section>
+          <section>
+            <h4>交付阻断</h4>
+            <div id="bookCandidateExportReadiness" class="source-list"></div>
+          </section>
+          <section>
+            <h4>涉及页面</h4>
+            <div id="bookCandidateDetailPages" class="source-list"></div>
+          </section>
+          <div class="book-candidate-detail-grid">
+            <section>
+              <h4>候选块</h4>
+              <div id="bookCandidateDetailBlocks" class="source-list"></div>
+            </section>
+            <section>
+              <div class="section-title-row">
+                <h4>歌词匹配</h4>
+                <button id="bookCandidateRecomputeLyricMatches" class="button secondary compact admin-only" type="button">重算匹配</button>
+              </div>
+              <div id="bookCandidateDetailLyricMatches" class="source-list"></div>
+            </section>
+            <section>
+              <h4>风险</h4>
+              <div id="bookCandidateDetailRisks" class="source-list"></div>
+            </section>
+            <section>
+              <h4>审核动作</h4>
+              <div id="bookCandidateDetailActions" class="source-list"></div>
+            </section>
+          </div>
+        </section>
+      </section>
+
+      <section id="bookReviewQueueView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>页面核验队列</h2>
+            <p id="bookReviewQueueCount">按风险和缺口排序页面，优先处理会影响候选拆分和歌词匹配的页</p>
+          </div>
+          <div class="header-actions">
+            <a class="button secondary" href="/api/book/review-queue.json">导出 JSON</a>
+            <a class="button secondary" href="/api/book/review-queue.csv">导出 CSV</a>
+            <button id="reloadBookReviewQueue" class="button secondary" type="button">刷新</button>
+          </div>
+        </header>
+
+        <div id="bookReviewQueueStats" class="stat-grid score-stat-grid"></div>
+
+        <section class="toolbar book-delivery-toolbar admin-only">
+          <input id="bookPageReviewImportFile" type="file" accept=".csv,text/csv">
+          <label class="inline-field">
+            <input id="bookPageReviewImportApply" type="checkbox">
+            正式导入
+          </label>
+          <button id="importBookPageReviews" class="button secondary" type="button">导入页审 CSV</button>
+        </section>
+        <div id="bookPageReviewImportSummary" class="export-readiness-summary"></div>
+        <div id="bookReviewQueueFilterSummary" class="export-readiness-summary"></div>
+
+        <section class="toolbar book-delivery-toolbar">
+          <select id="bookReviewQueueVolumeFilter">
+            <option value="">全书</option>
+            <option value="上">上册</option>
+            <option value="下">下册</option>
+          </select>
+          <select id="bookReviewQueueStatusFilter">
+            <option value="">全部页审状态</option>
+            <option value="pending">待页审</option>
+            <option value="needs_followup">需跟进</option>
+            <option value="manual_hold">挂起</option>
+            <option value="reviewed">已复核</option>
+          </select>
+          <input id="bookReviewQueuePageStart" type="number" min="1" placeholder="起始页">
+          <input id="bookReviewQueuePageEnd" type="number" min="1" placeholder="结束页">
+          <label class="inline-field">
+            数量
+            <input id="bookReviewQueueLimit" type="number" min="1" max="5000" value="200">
+          </label>
+          <label class="inline-field">
+            <input id="bookReviewQueueIncludeClean" type="checkbox">
+            包含 clean 页
+          </label>
+          <button id="bulkPreviewCleanPageReviews" class="button secondary compact admin-only" type="button">批量预检 clean 页</button>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>优先级</th>
+                <th>页面</th>
+                <th>谱块/Layout</th>
+                <th>候选</th>
+                <th>风险</th>
+                <th>建议动作</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="bookReviewQueueRows"></tbody>
+          </table>
+        </section>
+      </section>
+
+      <section id="bookPagesView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>页面版面标注</h2>
+            <p id="bookPageLayoutMeta">选择册页后加载扫描页和版面块</p>
+          </div>
+          <div class="header-actions">
+            <button id="reloadBookPageLayout" class="button secondary">刷新</button>
+          </div>
+        </header>
+
+        <section class="toolbar book-delivery-toolbar">
+          <select id="bookPageVolumeInput">
+            <option value="上">上册</option>
+            <option value="下">下册</option>
+          </select>
+          <button id="prevBookPageLayout" class="button secondary compact" type="button">上一页</button>
+          <input id="bookPageNoInput" type="number" min="1" value="100" placeholder="页码">
+          <button id="nextBookPageLayout" class="button secondary compact" type="button">下一页</button>
+          <button id="loadBookPageLayout" class="button" type="button">加载页面</button>
+          <select id="bookPageIndexStatusFilter" title="筛选左侧页面队列">
+            <option value="">全部页面</option>
+            <option value="active_review">待复核/跟进/挂起</option>
+            <option value="pending">待页审</option>
+            <option value="needs_followup">需跟进</option>
+            <option value="manual_hold">挂起</option>
+            <option value="reviewed">已复核</option>
+          </select>
+          <button id="nextBookPageReviewTarget" class="button secondary compact" type="button">下一待复核</button>
+          <span id="bookPageActiveTool" class="muted">当前工具：曲谱</span>
+        </section>
+
+        <div class="book-page-layout-workbench">
+          <aside class="panel book-page-thumbnail-panel">
+            <div class="panel-title-row">
+              <h3>页面</h3>
+              <span id="bookPageThumbCount" class="tag">0</span>
+            </div>
+            <div id="bookPageThumbList" class="book-page-thumb-list"></div>
+          </aside>
+          <section class="panel book-page-image-panel">
+            <div class="book-page-canvas-toolbar">
+              <span id="bookPageDrawHint">在页面空白处拖拽可新增当前类型的版面框</span>
+              <button id="markBookPageReviewed" class="button secondary compact admin-only" type="button">标记已核验</button>
+              <button id="markBookPageReviewedNext" class="button compact admin-only" type="button">已核验并下一页</button>
+              <button id="followupBookPageReviewNext" class="button secondary compact admin-only" type="button">跟进并下一页</button>
+              <button id="holdBookPageReview" class="button secondary compact admin-only" type="button">挂起</button>
+              <button id="holdBookPageReviewNext" class="button secondary compact admin-only" type="button">挂起并下一页</button>
+            </div>
+            <div id="bookPageCanvas" class="book-page-canvas">
+              <img id="bookPageImage" alt="扫描页">
+              <div id="bookPageOverlay" class="book-page-overlay"></div>
+            </div>
+          </section>
+          <section class="panel book-page-editor-panel">
+            <h3>标注工具</h3>
+            <div class="book-page-tool-grid admin-only">
+              <button class="book-page-tool active" type="button" data-book-page-tool="score_block">曲谱</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="title_block">歌名</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="lyrics_block">歌词</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="metadata_block">元信息</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="annotation_block">注释</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="header_footer">页眉页脚</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="page_number">页码</button>
+              <button class="book-page-tool" type="button" data-book-page-tool="unknown_block">其他</button>
+            </div>
+            <h3>选中块</h3>
+            <div id="bookPageSelectedSummary" class="source-list"></div>
+            <div class="book-page-edit-grid admin-only">
+              <label>类型
+                <select id="bookPageBlockType">
+                  <option value="score_block">曲谱</option>
+                  <option value="title_block">歌名</option>
+                  <option value="lyrics_block">歌词</option>
+                  <option value="metadata_block">元信息</option>
+                  <option value="annotation_block">注释</option>
+                  <option value="header_footer">页眉页脚</option>
+                  <option value="page_number">页码</option>
+                  <option value="unknown_block">未知</option>
+                </select>
+              </label>
+              <label>X<input id="bookPageBlockX" type="number" min="0"></label>
+              <label>Y<input id="bookPageBlockY" type="number" min="0"></label>
+              <label>W<input id="bookPageBlockW" type="number" min="8"></label>
+              <label>H<input id="bookPageBlockH" type="number" min="8"></label>
+              <label>曲序<input id="bookPageBlockSeq" type="number" min="1" placeholder="可留空"></label>
+              <label class="book-page-edit-wide">识别文本<input id="bookPageBlockText" placeholder="可留空"></label>
+              <button id="saveBookPageBlock" class="button compact" type="button">保存块</button>
+              <button id="deleteBookPageBlock" class="button secondary compact" type="button">删除块</button>
+            </div>
+            <div class="book-page-split-tools admin-only">
+              <label>水平切分 Y 坐标<input id="bookPageSplitY" type="number" min="0" placeholder="拖动选中框红线或输入绝对像素"></label>
+              <button id="splitBookPageBlock" class="button secondary compact" type="button">水平拆块</button>
+              <button id="mergeBookPageBlocks" class="button secondary compact" type="button">合并勾选块</button>
+            </div>
+            <div id="bookPageScoreUnitPrefillNotice" class="source-list"></div>
+            <div id="bookPageLayoutSplitResult" class="source-list"></div>
+            <h3>本页歌曲单元</h3>
+            <div class="row-actions admin-only book-page-song-unit-bulk-actions">
+              <button id="dryRunReadyBookPageSongUnits" class="button secondary compact" type="button">预检可用单元</button>
+              <button id="applyReadyBookPageSongUnits" class="button secondary compact" type="button">应用可用单元</button>
+              <button id="applyReadyBookPageSongUnitsNext" class="button compact" type="button">应用并核验下一页</button>
+            </div>
+            <div id="bookPageScoreUnitHandoff" class="source-list"></div>
+            <div id="bookPageSongUnitBulkResult" class="source-list"></div>
+            <div id="bookPageSongUnitSummary" class="source-list"></div>
+            <div id="bookPageSongUnitList" class="source-list"></div>
+            <h3>本页块</h3>
+            <div id="bookPageBlockList" class="source-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="bookRisksView" class="view">
+        <header class="page-header">
+          <div>
+            <h2>谱面风险</h2>
+            <p id="bookRiskCount">加载中</p>
+          </div>
+          <div class="header-actions">
+            <button id="recomputeBookRisks" class="button admin-only">重算风险</button>
+            <button id="reloadBookRisks" class="button secondary">刷新</button>
+          </div>
+        </header>
+
+        <div id="bookRiskStats" class="stat-grid score-stat-grid"></div>
+        <div id="bookRiskQueueFilterSummary" class="export-readiness-summary"></div>
+
+        <section class="toolbar book-delivery-toolbar">
+          <input id="bookRiskSearchInput" type="search" placeholder="搜索风险、候选、曲序、曲名">
+          <select id="bookRiskLevelFilter">
+            <option value="">全部等级</option>
+            <option value="P0">P0 阻断</option>
+            <option value="P1">P1 高风险</option>
+            <option value="P2">P2 待抽查</option>
+            <option value="P3">P3 低风险</option>
+          </select>
+          <select id="bookRiskStatusFilter">
+            <option value="open">未解决</option>
+            <option value="">全部状态</option>
+            <option value="resolved">已解决</option>
+          </select>
+        </section>
+
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>等级</th>
+                <th>风险</th>
+                <th>候选</th>
+                <th>位置</th>
+                <th>说明</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="bookRiskRows"></tbody>
+          </table>
+        </section>
+        <footer class="pager">
+          <button id="prevBookRiskPage" class="button secondary">上一页</button>
+          <span id="bookRiskPageInfo"></span>
+          <button id="nextBookRiskPage" class="button secondary">下一页</button>
+        </footer>
+      </section>
+
+      <section id="bookSongDetailView" class="view">
+        <header class="page-header">
+          <div>
+            <h2 id="bookSongTitle">图书单曲谱面</h2>
+            <p id="bookSongMeta">加载中</p>
+          </div>
+          <div class="header-actions">
+            <button id="backToBookScores" class="button secondary" type="button">返回谱面列表</button>
+            <button id="reloadBookSong" class="button" type="button">刷新</button>
+          </div>
+        </header>
+
+        <div id="bookSongStats" class="mini-stats"></div>
+
+        <div class="book-song-workbench">
+          <section class="panel book-song-score-panel">
+            <div class="section-title-row">
+              <h3>原始谱面</h3>
+              <select id="bookSongBlockSelect"></select>
+            </div>
+            <a id="bookSongImageLink" class="book-song-image-link" href="#" target="_blank" rel="noreferrer">
+              <img id="bookSongImage" alt="原始谱面">
+            </a>
+            <div id="bookSongBlockMeta" class="source-list"></div>
+          </section>
+
+          <section class="panel book-song-editor-panel">
+            <div class="section-title-row">
+              <h3>标准简谱编辑器</h3>
+              <div class="row-actions">
+                <button id="bookSongRecognize" class="button secondary compact admin-only" type="button">高精识别</button>
+                <button id="bookSongPlay" class="button secondary compact" type="button">试听</button>
+                <button id="bookSongStop" class="button secondary compact" type="button">停止</button>
+                <button id="bookSongAccept" class="button secondary compact admin-only" type="button">确认交付</button>
+                <button id="bookSongNeedsReview" class="button secondary compact admin-only" type="button">标记复核</button>
+                <button id="bookSongSave" class="button compact admin-only" type="button">保存</button>
+              </div>
+            </div>
+            <div class="book-song-editor-grid">
+              <label>调号<input id="bookSongNotationKey"></label>
+              <label>拍号<input id="bookSongNotationTime"></label>
+              <label>速度<input id="bookSongNotationTempo" type="number" min="36" max="220"></label>
+              <label>状态<select id="bookSongNotationStatus">
+                <option value="auto_draft">自动草稿</option>
+                <option value="edited">已修改</option>
+                <option value="needs_review">需复核</option>
+                <option value="needs_retry">退回重识别</option>
+                <option value="manual_hold">人工抄谱</option>
+                <option value="accepted">已确认</option>
+              </select></label>
+            </div>
+            <label class="book-song-editor-label">简谱<textarea id="bookSongNotationText" rows="8" spellcheck="false"></textarea></label>
+            <label class="book-song-editor-label">歌词<textarea id="bookSongLyricsText" rows="5" spellcheck="false"></textarea></label>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="section-title-row">
+            <h3>电子谱预览</h3>
+            <div id="bookSongPreviewMeta" class="muted"></div>
+          </div>
+          <div id="bookSongScorePreview" class="jianpu-preview"></div>
+        </section>
+
+        <section class="panel">
+          <h3>OCR 与校对依据</h3>
+          <div id="bookSongEvidence" class="book-score-text-grid"></div>
+        </section>
+
+        <section class="panel">
+          <h3>识别记录</h3>
+          <div id="bookSongRecognitionRuns" class="recognition-run-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="/static/app.js?v={{ static_version }}"></script>
+  </body>
+</html>
